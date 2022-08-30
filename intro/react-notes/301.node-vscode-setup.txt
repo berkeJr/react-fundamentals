@@ -1,0 +1,10 @@
+301.Node ve Visual Studio Code Kurulumu:
+
+- Node.Js kurulumu: Node.js JavaScript kodunun server kısmında çalışmasını sağlar (server-side), ayrıca paket yönetimi 
+ve geliştirme ortamı sunar. Biz bu eğitimimiz boyunca node'un sağladığı bu imkanları kullanıyor olacağız. 
+
+- İnternet üzerinden node.js.org adresinden node'u indirmemiz gerekiyor. Oradan indirelim.
+
+- Daha sonra da Microsoft'un açık kaynak olarak sunduğu Visual Studio Code uygulamasını (kod editörünü) 
+resmi sitesinden ücretsiz bir şekilde indirelim.
+

@@ -1,0 +1,74 @@
+305.İlk React Projemizin Oluşturulması
+
+- Şimdi ise ilk react projemizi oluşturalım. Bunun için VS Code'da terminali açalım.
+
+- İlk önce terminalde (command promp'ta) proje klasörümüze locate olup olmadığımızı kontrol etmemiz gerekli. Örneğin
+şu anda react-redux-workshop klasörü içerisindeyiz;
+
+C:\Users\Berke\Desktop\projects\react-redux-workshop
+
+
+- Şu komudu yazarak react projemizi oluşturalım: 
+npx create-react-app intro
+
+- Bu komut react-redux-workshop klasörü altında intro isimli bir react projesi oluşturur. Bu komut ile ayrıca
+intro klasörü içerinde bir package.json dosyası oluşturulur. package.json dosyası ise bizim Node Packaga Manager'dan
+(NPM) kurduğumuz paketlerin konfigürasyon dosyasıdır. Bu dosya ile ilerleyen zamanlarda sıklıkla çalışıyor olacağız.
+
+- Not: cd.. komutu dizinde bir klasör geri gider. 
+
+
+- Peki NPM(Node Package Manager) nedir? İnternetten NPM'in resmi sitesine gideriz: www.npmjs.com. Orada bütün
+paketler bulunuyor. Yani açık kaynak yazılım geliştirenler istedikleri Javascript paketlerini yazıyorlar, buraya 
+yüklüyorlar ve bizde 'npm install' diyerek bu paketleri indirip kullanabiliyoruz. Örneğin react paketini oradan 
+indiririz.
+
+- Tekrardan terminalde intro klasörümüze locate olalım.
+cd intro 
+
+- intro klasörüne (react projemize) locate olduktan sonra yapmamız gereken npm start komutunu yazmak. 
+npm start bizim için intro klasöründeki bu projeyi geliştirme ortamında node üzerinde yayına alıyor. 
+Yani tarayıcıda localhost:3000 portunda projemizi yayına alıyor. (React için default port 3000'dir)
+
+- Şimdi de intro klasöründe src klasörü içerisine bakalım. Orada bizim için proje kodları bulunuyor. İlk etapta App.js 
+isimli bir dosya göreceğiz. Orada App isimli bir function var. Onun içerisindeki div'in içindeki tüm kodları silelim
+sadece div kalsın. Onun içerisine <h3>Hello from react!</h3> yazalım.
+
+function App() {
+  return (
+    <div>
+      <h3>Hello from react!</h3>
+    </div>
+  );
+}
+
+Yani artık react ile tarayıcıda Hello from React! yazdırdık. (localhost:3000)
+
+- Daha sonra mesela src klasörü içerisinde App.css dosyası da var. Bu az önce var olan App.js uygulamasının css dosyası.
+Onu silebiliriz. 
+
+- App.css sil
+
+- Daha sonra App.js dosyasındaki "import './App.css';" kısmını da silelim. 
+
+- App.test.js dosyası 
+
+- logo.svg dosyası 
+
+- App.js dosyasındaki "import logo from './logo.svg';" kısmı
+
+- index.css dosyası 
+
+- index.js içerisindeki "import './index.css';" kısmını da silelim
+
+Bu dosyaları silelim.
+
+
+- App.js dosyasında en üste şunu yazabiliriz: import React from 'react'
+
+- Yani şimdiye kadar src klasörü içerisindeki App.js ile çalıştık ve ilk etapta sade bir görünüm olması için 
+kafamızı karıştırabilecek dosyaları sildik.
+
+
+
+

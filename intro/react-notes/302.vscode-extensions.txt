@@ -1,0 +1,13 @@
+302.Visual Studio Code Eklentilerinin Kurulması
+
+- VS Code'u da indirdikten sonra şu eklentileri de indirelim:
+
+Auto Close Tag
+Auto Rename Tag 
+Bracket Pair Colorizer 
+ES Lint
+ES7 - React / Redux / GraphQl
+Prettier Code Formatter
+JS ES6+ Code Snippets
+
+

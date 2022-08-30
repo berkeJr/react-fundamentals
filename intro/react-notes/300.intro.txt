@@ -1,0 +1,18 @@
+300.Giriş
+
+React - Redux - Hooks Web Geliştirme Kursu
+
+Bu kursta syntax bazlı programlama yerine ne zaman react, ne zaman react-redux, ne zaman react-hooks kullanmamız gerektiğini
+mantığıyla öğreneceğiz. 
+
+1.Adım: Sıfırdan başlıyoruz. Yeni nesil JavaScript tekniklerini de öğrenerek React'a giriş yapıyoruz.
+
+2.Adım: State Management konusunu öğreniyoruz. Redux burada başlıyor. 
+
+3.Adım: Redux ile gelişmiş bir proje yapacağız ve redux kavramını nasıl, nerede ve neden kullanmamız gerektiğini daha iyi 
+anlayacağız.
+
+4.Adım: Yepyeni bir konu olan React-Hooks konusunu öğreneceğiz. 
+
+Not: Eğitim boyunca EcmaScript 6+ ile gelen modern JavaScript tekniklerini de öğreniyor olacağız. Ayrıca eğitim 
+içerisinde hem React tarafında hem de React-Redux tarafında aynı projeyi 2 farklı yöntem kullanarak yapıyor olacağız.

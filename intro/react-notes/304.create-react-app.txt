@@ -1,0 +1,14 @@
+304.Create-React-App Kurulumu
+
+- Şimdi de create-react-app kurulumunu yapalım. Bu react'ı geliştiren
+facebook tarafından resmi olarak yayınlanan bir uygulama. Ve bizim hızlıca react ugulamaları oluşturabilmemizi
+sağlıyor. Bunu da şu şekilde kurarız. VS Code'da terminali açalım. Terminal bizim için komut satırı oluşturuyor. 
+Bu komut satırı aracılığıyla biz komutlarımızı çalıştırabiliyoruz. Terminale şunu yazalım; 
+
+npm install -g create-react-app
+
+-g koymazsak bu şu anlama gelir. Ben bunu sadece bu klasöre kurmak istiyorum (terminaldeki dizin). -g ise global demek. 
+Yani create-react-app kodunu nereden çalıştırırsak çalıştıralım erişebiliriz demek. Yani klasör bağımsız, buna da global
+kurulum diyoruz. 
+
+
