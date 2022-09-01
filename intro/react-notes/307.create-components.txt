@@ -1,2 +1,130 @@
 307.İlk Componentlerimizi Oluşturalım
 
+
+- React'ta en öenmli yapılardan birisi olan 'component mimarisini' anladık. Şimdi de component'in kendi yapsını anlayalım. 
+Component'ler bir kaç şekilde oluşturulabiliyor. 
+
+
+- Function Components:    Fonksiyon component'ler  
+- Class Components:       Class componentler       
+- React-Hooks:            Hooks denilen yapı ile oluşturulan componenentler
+
+
+Not: JavaScript'te fonksiyonlar; C#, Java gibi dillerdeki fonksiyonlarla benzerdir. Ayrıca JS'de fonksiyonlar da bir
+tiptir. Yani int gibi, string gibi, fonksiyonlar da birer tiptir. Bu özelliği vasıtasıyla JS'de bambaşka bir ortam oluşuyor.
+
+
+// Klasik bir JS fonksiyonu
+
+function App() {
+  return (
+    <div className="App">
+        <h3>Hi there! It's Berke, Welcome to React!</h3>
+        <h4>Deneme</h4>
+    </div>
+  );
+
+  /*
+
+   - Burada return işlemi direkt olarak bir parantezle başlıyor. Burada bir .jsx yapısı var.  Yani JavaScript XML 
+   dediğimiz yapı var. Bu react'ta jsx yapısıdır. Peki nedir bu jsx yapısı? 
+   
+   - React aslında bir kütüphane ve arayüz oluşturmaya yönelik kolaylıklar sağlıyor. O da react'ın en önemli yapısı. 
+   Yani .jsx yapısı. Normalde return içerisindeki ifadenin HTML'den bir farkı yok gibi gelebilir. Buradaki div aslında 
+   HTML olarak render ediliyor, yani biz html'deki div'i ve diğer elementleri aynen burada da kullanabiliyoruz, 
+   ama aslında buradaki yapı tam olarak jsx yapısıdır. Yani bu div'in react kütüphanesinde bir karşılığı var. 
+   Ayrıca örneğin biz bu div'in dışında bir h3 elementi oluşturursak hata verir. Örneğin bir div elementi 
+   var ve açılıp kapanıyor, biz onunla aynı hiyerarşide yani ona kardeş bir h3 element oluşturamayız. 
+   Yani bizim bir ana container tag'ımız olacak (div) ve biz onun içerisine yazacağız. 
+    
+   */   
+
+}
+
+
+/*
+
+- Peki biz şimdi ilk componenent'imizi oluşturmak istiyoruz. Componentimizi 'Class Componenti' olarak oluşturacağız. 
+intro klasörü içindeki src klasörü üzerinde sağ tıklayalım ve new file diyelim. Ana componentimiz bizim App'miz. Yani 
+App.js dosyası. Ana componenentimiz içerisine biz başka bir component veya componentler ekleyebiliriz. Yani olaya 
+ana component'ten başlıyoruz. Şimdi de yeni componentler oluşturup App.js içerisinde kullancağız.   
+
+- Örneğin App bizim ana componentimiz. O ana yapı içerisinde bir navbar oluşturalım. Daha sonra da navbar haricinde
+iki menü daha oluşturmak istiyoruz (Categories ve Products için). Yani bizim App componenti içerisinde 3 tane daha componente 
+ihtiyacımız var. 
+
+- Componentlerin isimlendirmeleri 'Pascal Case' yapılır, yani kelimelerin ilk harfleri büyük harflerden oluşur. 
+Şimdi de src klasöründe sağ tıklayıp new file dedikten sonra file'ın adını Navi.js yapalım. 
+
+
+// Navi.js'ye gidelim ve burada yeni componenentimizi oluşturalım.
+
+/* 
+   - rcc yazalım ve enter'a basalım, hani bir bileşen ekledik ya snippent'lar, işte rcc oradan geliyor.
+   - rcc + enter yapınca bize bir adet 'react class componenti' oluşturdu. 
+*/
+
+import React, { Component } from 'react'
+
+export default class Navi extends Component {
+    render() {
+        return (
+            <div>
+                <h2>Navi Component</h2>
+            </div>
+        )
+    }
+}
+
+/*
+
+- Navi isminde class componentimiz oluştu.
+
+- export = public anlamına geliyor. Yani diğer taraflardan erişilebilir durumda. Yani C#, Java'daki public
+keyword'ün karşılığıdır. 
+
+- Bunun da bir component olabilmesi için React kütüphanesindeki 'Component' nesnesini extend (inheritance = miras)
+etmesi gerekir. 
+
+- Oluşturduğumuz class componenti içerisinde bir de render() fonksiyonumuz bulunuyor. Class componentlerin şöyle bir 
+güzelliği var. Ayrıca bu render() scope'u dışında yine component içerisinde farklı fonksiyonlar yazıp render() fonksiyonu içinde
+return altında, div içerisinde çağırabiliyoruz, kullanabiliyoruz. 
+
+- Aslında App'deki return(), Navi'deki render()'a karşılık geliyor.
+
+- Render işlemi ise, bir component değiştiğinde uygulamanın tamamının yerine sadece o componenti değişen veriye göre
+tekrardan çalıştırmaya yarıyor.
+
+- div içerisinde h2 elementleri arasında Navi Component yazdık. Artık o div içerisine ne yazarsak o tasarımı ortaya çıkaracak.
+
+- Daha sonra ise bu Navi componentini kullanabilmek için App.js dosyasında import edip, orada çağırmamız gerekli.
+
+*/
+
+
+// Navi componentini App.js içerisine ekleyelim. Şu anda App.js dosyasındayız.
+
+import React from 'react'
+
+// Navi componentini kullanabilmek için import etmemiz gerekli. 
+import Navi from './Navi'
+
+function App() {
+  return (
+    // Navi componentini burada kullanabiliriz. (div içerisinde)
+    <div>
+         <Navi></Navi>
+         <Navi></Navi>
+         <Navi/>
+         <Navi/>
+    </div>
+  );
+
+
+
+// Şimdi 2 tane daha component ekleyelim: CategoryList.js, ProductList.js
+
+- App.js ana componentimiz, 
+- Navi.js, CategoryList.js ve ProductList.js ana component içerisinde(App.js'de) import edip kullandığımız componentler
+- Daha sonra ise bu componentleri şekillendireceğiz. Onun içinde css veya farklı kütüphaneler kullanacağız.
+
