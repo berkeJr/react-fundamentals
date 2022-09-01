@@ -9,25 +9,32 @@ import CategoryList from "./CategoryList";
 // ProductList componentini burada (App.js'de = Ana componentte) kullanabilmek için import etmemiz gerekli.
 import ProductList from "./ProductList";
 
+// ReactStrap'den kullanmak istediğimiz component'leri import etmemiz gerekli.
+import { Container, Row, Col } from "reactstrap";
 
 // Klasik bir JS fonksiyonu
 function App() {
   return (
     <div>
-      {/* Navi componentini kullanalım (İstediğimiz kadar çağırıp kullanabiliriz.) */}
+      {/* Navi ve diğer componentleri kullanalım (İstediğimiz kadar çağırıp kullanabiliriz.) */}
 
-      <Navi></Navi>
-      <Navi></Navi>
-      <Navi/>
-      <Navi/>
+      <Container>
+        <Row>
+          <Navi />
+        </Row>
 
-      <CategoryList></CategoryList>
+        <Row>
+          <Col xs="3">
+            <CategoryList />
+          </Col>
 
-      <ProductList></ProductList>
-
+          <Col xs="9">
+            <ProductList />
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
-
 
   /*
 
@@ -42,7 +49,7 @@ function App() {
    var ve açılıp kapanıyor, biz onunla aynı hiyerarşide yani ona kardeş bir h3 element oluşturamayız. 
    Yani bizim bir ana container tag'ımız olacak (div) ve biz onun içerisine yazacağız. 
     
-   */   
+   */
 }
 
 export default App;

@@ -11,7 +11,7 @@ export default class ProductList extends Component {
   render() {
     return (
       <div>
-        <h3>ProductList Component</h3>
+        <h3>ProductList</h3>
       </div>
     )
   }
