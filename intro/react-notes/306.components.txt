@@ -1,1 +1,37 @@
 306.Component Mimarisini Derinlemesine Anlamak
+
+- React dünyasında en önemli yapılardan birisi, component dediğimiz yapıdır. Component mimarisini iyi anlamamız
+gerekiyor. Peki nedir bu react'ın komponent yapısı? 
+
+- Şöyle ki biz uygulamalarımızı componentlere bölüyoruz. Yani component demek bileşen demek. 
+React bir SPA, yani single page application yani tek sayfa uygulamasıdır. Şöyle ki bizim aslında tek 
+bir sayfamız var. İşte bu sayfamız bizim için bir component görevi görecek. Yani olay temel bir component'le başlıyor. 
+Daha sonra mesela bu kapsayıcı component içerisinde bizim bir navigation bar'ımız var. Onu da bir component olarak
+oluşturuyoruz. Sonra sol tarafta başka bir menü var, o da bir component, sonra sağ tarafta bir menü 
+oluşturalım o da bir component. Daha sonra mesela nav-bar'da bir login yapısı oluşturmak istiyoruz, o da bir component.
+Yani biz iç içe componentlerle sayfalarımızı yapılandırıyoruz. Tabii ki yeri geldiğinde o componentleri değiştirebiliriz.
+Örneğin bir componenti kaldırıp onun yerine bambaşka bir component ekleyebiliriz. Bu da 'routing' dediğimiz bir yapıyla oluyor.
+
+
+- React'ta temel mesele bu componenent'leri birbiri ile görüştürmek. Nedir bu peki? Mesela bir sayfa içerisinde farklı kategoriler
+için category componenti var. Örneğin sol taraftaki menu-bar'da category componenti olsun (içerisinde farklı kategori isimleri yer alsın), 
+sağ taraftaki menu-bar'da da ürünler için bir component olsun, yani product componenenti olsun. Biz sol taraftaki menu'de 
+herhangi bir kategoriye tıklayınca sağ taraftaki menüde ürünlerin değişmesini, yani o kategoriye ait ürünlerin gelmesini istiyoruz. 
+İşte react tarafında en büyük sıkıntı bu, yani bir componentten diğerine 'veri transferi'. 
+
+
+- React tarafında şöyle bir basit yapı var. Üst component (kapsayıcı olan) alt componenente veri taşıyabiliyor. Ama alt 
+componenent üst componenente veri taşıyamıyor. Yani olay bir componenentten alttaki componenente veri transferi şeklinde.
+Yani üst componenent alt componenente veri, event, fonksiyon taşıyabiliyor, fakat alt componenent üst componenente veri vs.
+taşıyamıyor. 
+
+- React ile uygulama geliştirirken dikkat etmemiz gereken konulardan birisi, hatta en önemlisi componenent hiyerarşisi.
+
+- Temel react'ın kendisinde ayrıca şöyle bir durum var. Üstteki componenent bir alttaki componenente veri taşıyabiliyor.
+Fakat 2 altında bulunan componenente veri taşıyamıyor, onun için ilk olarak bir alttakine, oradan da bir alttakine 
+veriyi, eventi taşıması gerekir. Fakat bu durumu daha sonra Redux kullanarak daha kolay bir şekilde yöneteceğiz. 
+
+- React'ta componenent yapısının avantajlarından birisi de şu: Mesela bir tane ana kapsayıcı componenentimiz var,
+sayfamız olsun. Onun içerisinde de farklı componenentler yer alıyor. Biz içerde bir componenenti değiştirdiğimiz 
+zaman sadece değişen componenent render ediliyor. Bu da bizim için performans anlamına geliyor. Yani uygulamanın 
+tamamını render etmiyoruz da ilgili kısmı render ederek uygulamamızda ciddi bir performans artışı sağlıyoruz. 
