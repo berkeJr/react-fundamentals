@@ -14,6 +14,10 @@ import { Container, Row, Col } from "reactstrap";
 
 // Klasik bir JS fonksiyonu
 function App() {
+
+  // let titleCategory = "Category List";
+  let titleProduct = "Product List";
+  
   return (
     <div>
       {/* Navi ve diğer componentleri kullanalım (İstediğimiz kadar çağırıp kullanabiliriz.) */}
@@ -25,11 +29,11 @@ function App() {
 
         <Row>
           <Col xs="3">
-            <CategoryList />
+            <CategoryList title="Category List" />
           </Col>
 
           <Col xs="9">
-            <ProductList />
+            <ProductList title={titleProduct} />
           </Col>
         </Row>
       </Container>

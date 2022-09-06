@@ -1,2 +1,134 @@
 309.Props İle Çalışmaya Başlamak
 
+
+- Bir componentten diğer bir componente data taşımak istediğimizde 'Props (properties)' yapısını kullanırız. 
+
+
+- Şimdi de React'ta bir diğer önemli konuya başlayalım. Öncelikle biz props'a neden ihtiyaç duyarız, bundan bahsedelim. 
+Bunun için de önce bir component hiyerarşimizi anlayalım. Bizim ana kapsayıcı App.js'miz var, onun da içerisinde 
+bir Navbar (Navi.js), Kategoriler (CategoryList.js) ve de Ürünler (ProductList.js) componentleri mevcut. Yani App.js ana componentimiz 
+ve onun da içerisinde 3 tane farklı componentimiz var. Yani App'nin altında direkt olarak çağırılmış olan 3 tane component var. 
+İşte bizim component hiyerarşimiz bu yapıdadır. 
+
+
+- Ana component: App.js 
+
+App.js içerisindeki componentler:
+- Navi.js
+- CategoryList.js
+- ProductList.js
+
+-------------------------------------------------------------------------------------------------------------------
+
+Şimdiye kadar biz şunu yapmıştık: 
+
+- CategoryList.js componenti içerisinde title olarak <h3>Category List</h3> (Category List) yazdırmıştık. 
+
+- Aynı şekilde ProductList.js componenti içerisinde title olarak <h3>Product List</h3> yazdırmıştık. 
+
+
+- Şimdi biz şunu yapmak istiyoruz:  CategoryList ve ProductList başlıklarının App.js'den gelmesini istiyoruz. 
+Yani App.js componenti içerisinde tanımlayacağımız değişkenden CategoryList.js ve ProductList.js componentlerine veri
+aktarılmasını istiyoruz. Kısacası amacımız bir componentten diğerine data taşımak. O zaman karşımıza props denen mantık
+çıkıyor. Props yani properties. Yani biz datayı props'larla taşıyor olacağız. 
+
+
+- Bunun için App.js'ye geliyoruz. App.js'de kullandığımız CategoryList componentine bir 'title' ile değer veriyoruz.
+title'ı burada değişken ismi olarak düşünebiliriz. Yani onun yerine anlamsız başka bir şey de yazılabilir. Sadece 
+önemli olan şu, biz bu title'ı daha sonra kullanacağız.    ==>  title="Category List"
+
+
+- Aynı işlemi App.js'de kullandığımız diğer bir component olan ProductList componenti için de yapıyoruz. ProductList
+componentinin yanına gelip title="Product List" diyoruz.   ==>  title="Product List"
+
+
+<Row>
+          <Col xs="3">
+            <CategoryList title="Category List" />
+          </Col>
+          
+          <Col xs="9">
+            <ProductList title="Product List" />
+          </Col>
+        </Row>
+
+
+- Daha sonra ise öncelikle App.js'den çıkıp CategoryList.js ekranına gelelim. Burada component fonksiyonunun hemen 
+içerisinde, (süslü parantezlerin içinde), render() fonksiyonunun hemen üzerinde, dışında, bir constructor
+(yapıcı blok) oluşturalım. Bu constructor'a biz props geçeceğiz. Yani değişken geçeceğiz. Daha sonra constructor 
+içerisinde super() diyerek bu props'ı componentimize taşıyoruz. Yani aslına bakarsak biz bu property'yi component
+bileşenine taşıyoruz. Bir de state denilen bir mantık var, henüz set edilmemiş, ileride göreceğiz. 
+
+ constructor(props) {
+    super(props);
+    this.state = {}
+ }
+
+
+- Peki daha sonra biz bunu nasıl okuyacağız? constructor'da işimiz bittikten sonra yine aynı sayfada (CategoryList.js'de) 
+component içerisinde render fonksiyonu içerisinde, jsx yazdığımız return içerisine girelim. Orada biz daha önce <h3> elementleri
+içerisinde Category List yazmıştık. (Yani statik olarak kendimiz yazmıştık) Şimdi ise dinamik olarak App.js'den çekmek istiyoruz. 
+<h3> elementi içerine girip o yazıyı silelim. Daha sonra o <h3> elementi içerisinde biz {} açalım, o süslü parantezler içerisinde 
+biz javascript, react kodlarını yazarız. Ve o süslü parantezler içerisine this.props.title yazalım:
+
+<h3>{this.props.title}</h3>  
+
+
+h3 elementi içerisinde yazdığımız this, componente gönder demek. this.props dediğimiz zaman aslında 
+componentteki props'lara erişebilmiş oluyoruz. 
+
+
+- Böylece biz veriyi artık App.js componenti içerisinden yönetebiliyoruz. Datayı oradan taşıyabiliyoruz. Bu durumda
+App.js'den CategoryList.js'ye veri taşımış olduk.
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+- Şimdi ise aynı işlemleri diğer bir componentimiz olan ProductList.js için de yapalım.
+
+
+- Not: javascript'te aslında özünde class diye bir şey yok. ES6+ standartları ile bu yapı javascript'e 
+dahil ediliyor.
+
+- Not: Aslında yeni nesil react ile birlikte props kullanımı için constructor yapısını kurmaya gerek de kalmadı, 
+eğer istersek constructor yapısını kullanmadan da <h3>{this.props.title}</h3> yazarak props'lara erişebiliriz.
+O şekilde hata almadan kullanabiliriz.
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+- Biz App.js'de componentleri kullandığımız yerde title="Product List" ve title="Category List" şeklinde kullanmıştık,
+biz eğer arzu edersek, App componenti içerisinde, return üzerinde değişkenle o değerleri tutup oradan alabiliriz.
+
+
+let titleCategory = "Category List";
+
+
+
+Daha sonra da componentleri kullanığımız yerde title'a karşılık gelen değişiklikleri yazarız
+
+<Col xs="3">
+    <CategoryList title={titleCategory} />
+</Col>
+          
+<Col xs="9">
+    <ProductList title={titleProduct} />
+</Col>
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+- Burada, App.js'de CategoryList için ilk yöntemle yani let ile değişken tanımlayıp kullanmadan title değerini tutalım,
+
+
+- ProductList için de;
+let titleProduct = "Product List";
+
+<Col xs="9">
+    <ProductList title={titleProduct} />
+</Col>
+
+ProductList için de let değişkeni kullanarak title değerini tutalım, böylelikle 2 yöntemi de kullanmış oluruz.
