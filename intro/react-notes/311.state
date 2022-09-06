@@ -1,0 +1,94 @@
+311.State İle Çalışmaya Başlamak:
+
+
+- React'ta 'States' ve 'Props' kavramları çok önemlidir. Şimdiye kadar props yapısını gördük, şimdi de 
+state yapısını görelim. 
+
+- Not: Props ve States data-event yönetimi için kullanılan iki farklı kavramdır. içiçe de kullanılabilir, 
+şimdi state kavramına daha yakından bakalım.
+
+- Props; bir componentten diğer componente taşınan data veya event'tir(fonksiyon). Yani bir componentten diğerine 
+bir veri taşımak istediğimiz zaman props kullanırız. 
+
+- State ise bir componentin data'sıdır. Yani biz bir componentte özel bir data tutmak istiyorsak, bunu state ile sağlıyoruz.
+Örneğin CategoryList'in datası o component içerisinde lazım. Uygulama içerisinde başka bir yerde bir daha bu Category List'i 
+kullanmayacağız. Yani Category List'in datası tamamen ona ait. (Bizim durumumuzda list group item'lar). Yani biz bu data'yı 
+category'nin içerisinde direkt olarak tutmak istiyorsak yani herhangi bir yerden taşımak istemiyorsak (ilgili datayı ilgili
+yerde tutma konusu) bu durumda state ile karşılaşırız. 
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+
+- Bu noktada CategoryList.js componentimize gelelim. State oluşturma yöntemlerinden birisi, component içerisine gelip
+süslü parantezler içerisinde, render() fonksiyonu üzerinde, dışında bir constructor oluşturup içerisinde belirtebiliriz.
+
+constructor(props) {
+    super(props);
+    // this.state = {counter: 1}   // state nesnemizi burada oluşturabiliriz(örnek amaçlı)  ==>  burada counter bir değişken ismi.    
+} 
+
+
+Mesela burada biz bu state'i kullanmak istiyoruz, yani burada sayaç isminde bir değişkenimiz var ve biz onu
+kullanmak istiyoruz. CategoryList componentinde return içerisine geliriz. (jsx kodlarımızı yazdığımız bölüm)
+
+<h3>{this.state.counter}</h3> 
+
+- Bu şekilde kullanım yapınca state içerisindeki counter değişkeninin tuttuğu değere ulaşıp h3 elementi 
+ile görüntüleyebiliriz. 
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+
+Başka bir örnek daha yapalım:
+
+ constructor(props) {
+    super(props);
+    // this.state = { counter:1} // counter bir değişken ismi
+
+    this.state = { 
+      categories: 
+      [
+        {categoryId: 1, categoryName: "Beverages" }, 
+        {categoryId: 2, categoryName: "Condiments"}
+      ] 
+    }; 
+  }
+
+
+- Peki biz bu state datasını burada list group'da nasıl kullanırız?
+
+<ListGroup>
+          <ListGroupItem>Cras justo odio</ListGroupItem>
+          <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
+          <ListGroupItem>Morbi leo risus</ListGroupItem>
+          <ListGroupItem>Porta ac consectetur ac</ListGroupItem>
+          <ListGroupItem>Vestibulum at eros</ListGroupItem>
+</ListGroup>
+
+
+Biz burada alt alta 5 tane ListGroupItem yazmışız, bunları state ile kullanmamız için bize 1 tanesi yeterli.
+
+Not: Map fonksiyonu çok önemli bir fonksiyondur. Listenin eleman sayısını tek tek döner. Fakat en sonunda 
+döndüğü elemanların hepsini yepyeni bir nesne yapıp yeni bir array döndürür. Yani bir döngü gibi çalışır.
+
+
+<ListGroup>
+    {this.state.categories.map((category) => (
+        <ListGroupItem key={category.categoryId} >{category.categoryName}</ListGroupItem>
+    ))}
+</ListGroup>
+
+Biz burada state ile categoryName'leri ekranda yazdırabilriz, ve de key ile de her bir elemanı, item'ı birbirinden 
+ayıracak categoryId değerlerini verebiliriz. 
+
+Not: Biz state'i oluştururken constructor() yapısını kullanmıştık. Biz ayrıca constructor yapısını kullanmadan da 
+state'lerimizi oluşturabiliriz. 
+
+state = {
+    categories: [
+        { categoryId: 1, categoryName: "Beverages" },
+        { categoryId: 2, categoryName: "Condiments" },
+    ],
+}; 
