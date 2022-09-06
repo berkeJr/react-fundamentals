@@ -12,14 +12,18 @@ import { ListGroup, ListGroupItem } from "reactstrap";
 
 export default class CategoryList extends Component {
 
-  constructor(props){
-    super(props);
-    // this.state = {counter:1}  ==>  Örnek amaçlı bir state
-    this.state = {
-      categories: [
-        {categoryId: 1, categoryName: "Beverages"},
-        {categoryId: 2, categoryName: "Condiments"}
-    ]};
+  // state = {counter:1}  ==>  Örnek amaçlı bir state
+  state = {
+    categories: [
+      {categoryId: 1, categoryName: "Beverages"},
+      {categoryId: 2, categoryName: "Condiments"}
+    ],
+    currentCategory: ""  // Tıklama eventi ile tıklanan kategorinin ismini yazdırmak için kullancağız.
+  };
+
+  // onClick fonksiyonu çalıştığında bu fonksiyonu çalıştırır.
+  changeCategory = (category) => {
+    this.setState({currentCategory: category.categoryName});
   }
 
   render() {
@@ -32,10 +36,15 @@ export default class CategoryList extends Component {
         <ListGroup>
           {
             this.state.categories.map(category=>(
-              <ListGroupItem key={category.categoryId} >{category.categoryName}</ListGroupItem>
+              <ListGroupItem onClick={() => this.changeCategory(category)} 
+                key={category.categoryId} >{category.categoryName}
+              </ListGroupItem>
             ))
           }          
         </ListGroup>
+
+        <h4>{this.state.currentCategory}</h4>
+
       </div>
     );
   }

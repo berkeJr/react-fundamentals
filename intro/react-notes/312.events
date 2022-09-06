@@ -1,0 +1,56 @@
+312.Event'lerle Çalışmaya Başlamak
+
+
+- Şimdiye kadar state'leri kullanarak CategoryList componenti altına Beverages ve Condiments kategorilerini eklemiştik. 
+Şimdi de şunu istiyoruz; Category List başlığı altında hangi kategoriye tıklarsak altta da o kategorinin adının görünmesini istiyoruz. 
+Daha sonra da App.js ve diğer componentlerimizi birbiri ile ilişkilendirmeye başlayacağız. Bunun için burada ayrıca 
+event'leri kullanıyor olacağız. (Örneğin tıklama eventi - onclick - veya diğer eventler) 
+
+
+- Peki tıklama eventi nasıl yazılır? Örneğin CategoryList componenti için tıklama eventi yazmak istiyoruz.
+Bunun için CategoryList.js component sayfasını açalım. Biz burada component içerisinde constructor oluşturup, onun içerisinde
+state ifadelerimizi yazıp daha sonra kullanmıştık. this.state deyip, category'lerimizi array içerisinde objelerle göstermiştik.
+Şimdi ise o array'in bitimine gelelim ve şunu yazalım: Yani yine state içerisinde başka bir state değeri oluşturalım
+
+currentCategory: "";
+
+
+- Daha sonra return içerisinde (.jsx kısmı) ListGroupItem'ın bittiği yerin altına şunu yazalım: 
+
+<h4>{this.state.currentCategory}</h4>
+
+
+- Bunu da yazdıktan sonra, artık state içerisinde currentCategory'ye ne değerini atarsak onu Category List'in 
+en altında yazar.
+
+
+-------------------------------------------------------------------------------------------------------------------------
+
+
+- Bizim herhangi bir ListGroupItem'a (herhangi bir kategori adı) tıkladığımız zaman olmasını istediğimiz
+bir işlem var. Bunu onClick ile gerçekleştiriyoruz. CategoryList.js de component içerisinde return içindeki 
+ListGroupItem etiketine şu özelliği verelim. 
+
+onClick={()=>this.setState({currentCategory:category.categoryName})}
+
+
+- setState ile state'de var olan neyi değiştirmek istiyorsak onu yazıyoruz. setState içerisinde bir obje veriyoruz. O objede 
+değiştirilmesini istediğimiz değeri yeniden set ediyoruz.  
+
+
+-------------------------------------------------------------------------------------------------------------------------
+
+
+- Bu işlemi yapmak için 2.yöntem de var, o yöntem daha kullanışlı. component içerisinde render() fonksiyonunun hemen 
+üzerinde changeCategory isminde bir değişken oluşturup onu arrow function ile kullanalım. Daha sonra 
+this.setState ile yazdığımız kodu kesip, fonksiyon içerisine koyalım.
+
+changeCategory = (category) => {
+    this.setState({currentCategory: category.categoryName})
+}
+
+- Daha sonra da ListGroupItem'da onClick eventi karşısına şunu yazalım: 
+onClick={() => this.changeCategory(category)} 
+
+- Not: React'la çalışırken Arrow Function kullanmak daha avantajlıdır. O sebeple eski-klasik fonksiyonlar yerine 
+Arrow Functions kullanmamız gerekir. 
