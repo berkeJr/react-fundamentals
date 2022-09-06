@@ -1,0 +1,65 @@
+310.Best Practice - Props İle Encapsulation:
+
+
+- Props yapısının temelini anladık. Fakat gerçek hayat projelerinde direkt bu şekilde çok az görürüz. 
+Kullanmamız gereken ortamlarda aslında biraz düzenlemeye gitmemiz gerekir. Bunu da 'Encapsulation' yapısı ile
+yaparız. Peki nedir encapsulation? 
+
+-  Örneğin App.js içerisinde, CategoryList ve ProductList componentlerini kullanıyoruz ve kullanırken de title ile değer 
+verip <h3> elementi içerisinde değer göndermiştik. Encapsulation, bizim için yeni bir eleman geldiği zaman verilen değeri 
+bir model gibi düşünüp, onun içerisinde herhangi bir yerde değişiklik yapmamak için bu işlemi kullanırız. 
+
+
+------------------------------------------------------------------------------------------------------------------
+
+
+- Yani encapsulation'dan yararlanırız. Yani şöyle ki az önce App.js'de tanımladığımız title değerleri dışında başka bir 
+özellik daha ekleyelim: 
+
+App.js içerisinde;
+
+let baskaBirIsim = "baskaBirDeger"
+
+- Bunu kullanmak için App.js'de kullandığımız CategoryList ya da ProductList'te ayrıca:
+
+baskaBirIsim = {baskaBirDeger}
+
+şeklinde bir ekleme yapmamız gerekir. 
+
+- Yani bir şey eklediğimizde mecburen her tarafı düzenlememiz gerekiyor. Bu sorunsuz bir şekilde çalışır, fakat 
+best practice kapsamında bu şekilde kullanmayız.
+
+
+------------------------------------------------------------------------------------------------------------------
+
+
+- Onun yerine değişken tanımlamada object notation'dan faydalanıp nesneler ile tanımlayabiliriz.
+
+=>    titleCategory değişkeni yerine categoryInfo 
+=>    titleProduct değişkeni yerine productInfo 
+
+isimli objeler oluşturalım
+
+
+- App.js'de CategoryList ve ProductList componentlerini çağırırken title anahtar kelimesini kullanmıştık, onun yerine
+info anahtar kelimesini kullanalım. 
+
+info={categoryInfo}
+
+info={productInfo}
+
+
+<Col xs="3">
+    <CategoryList info={categoryInfo} />
+</Col>
+
+<Col xs="9">
+    <ProductList info={productInfo} />
+</Col>
+
+
+- Bu sayede App.js'de obje içerisinde yeni özellikler eklediğimizde yine App.js'de CategoryList ve ProductList 
+componentlerine özellik gönderirken her defasında yeni özelliği yazmamız gerekmez. 
+
+- Daha sonra da CategoryList ve ProductList'te gönderdiğimiz props'ları düzenleriz.
+<h3>{this.props.info.title}</h3>

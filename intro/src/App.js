@@ -15,8 +15,13 @@ import { Container, Row, Col } from "reactstrap";
 // Klasik bir JS fonksiyonu
 function App() {
 
-  // let titleCategory = "Category List";
-  let titleProduct = "Product List";
+  let categoryInfo = {
+    title: "Category List"
+  }
+
+  let productInfo = {
+    title: "Product List"
+  }
   
   return (
     <div>
@@ -29,11 +34,11 @@ function App() {
 
         <Row>
           <Col xs="3">
-            <CategoryList title="Category List" />
+            <CategoryList info={categoryInfo} />
           </Col>
 
           <Col xs="9">
-            <ProductList title={titleProduct} />
+            <ProductList info={productInfo} />
           </Col>
         </Row>
       </Container>
