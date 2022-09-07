@@ -1,0 +1,44 @@
+314.JsonServer İle API Kurulumu:
+
+
+- Bu aşamada ise data'mızı bir API'dan almak istiyoruz, yani gerçek data ile çalışmak istiyoruz. Bunun için burada bir API
+oluşturmayacağız, o bizim konumuzun dışında. Biz normalde API'lari bir Java ortamında, bir .Net ortamında ya da bir Node.js 
+Express.js ortamında oluştururuz. Ama biz burada hazır API kullanacağız. Bu tip geliştirme ortamları için 
+Json-Server'i kullanıyor olacağız. Json-Server ile elimizde bir json datamız olacak ve o json datasında bir API'da 
+olması gereken her şeyi içeren data'lar olacak. 
+
+
+- json server'i kurabilmek için terminalde intro klasörüne locate olduktan sonra; 
+
+npm install -g json-server
+
+komudunu çalıştırmamız gerekli. 
+
+
+- Daha sonra klasör yapımızda intro klasörü ile aynı dizinde 'api' isimli bir klasör oluşturalım ve de dersin kaynaklar kısmından 
+indirdiğimiz db.json dosyasını api klasörü içerisine atalım.
+
+
+- db.json'da bir obje notasyonu bulunuyor. İçerisinde  ürünler (products) ve de kategoriler var (categories). 
+ 
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+- Daha sonra terminalde api klasörüne locate olalım ve şu komudu yazalım
+
+json-server --watch db.json
+
+- Bu da 3000.portu kullanıyor. 3000.port'ta products ve categories datasını bize getirdi. 
+
+- Daha sonra react yayınımızı durdurup yeniden başlatalım
+
+- Şu an localhost:3000'de json server   /  localhost:3001'de react uygulamamız var. 
+
+- localhost:3000/products bize ürünleri listeler
+
+- localhost:3000/categories bize kategorileri listeler. 
+
+- localhost:3000/products?id=1  bize id'si 1 olan ürünü getirir. 
+
+- Şu an bizim elimizde sanal/fake bir API var ve bu API ile işlemlerimizi gerçekleştireceğiz.
