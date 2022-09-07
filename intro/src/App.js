@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 
 // Navi componentini burada (App.js'de = Ana componentte) kullanabilmek için import etmemiz gerekli.
 import Navi from "./Navi";
@@ -12,40 +12,54 @@ import ProductList from "./ProductList";
 // ReactStrap'den kullanmak istediğimiz component'leri import etmemiz gerekli.
 import { Container, Row, Col } from "reactstrap";
 
-// Klasik bir JS fonksiyonu
-function App() {
 
-  let categoryInfo = {
-    title: "Category List"
+// App Class Componenti:
+export default class App extends Component {
+
+  state = {
+    currentCategory: ""  // Tıklama eventi ile tıklanan kategorinin ismini yazdırmak için kullancağız. 
   }
 
-  let productInfo = {
-    title: "Product List"
+  // onClick fonksiyonu çalıştığında bu fonksiyonu çalıştırır.
+  changeCategory = (category) => {
+    this.setState({currentCategory: category.categoryName});
   }
   
-  return (
-    <div>
-      {/* Navi ve diğer componentleri kullanalım (İstediğimiz kadar çağırıp kullanabiliriz.) */}
+  render() {
 
-      <Container>
-        <Row>
-          <Navi />
-        </Row>
+    let categoryInfo = {
+      title: "Category List",
+    };
+  
+    let productInfo = {
+      title: "Product List",
+    };
 
-        <Row>
-          <Col xs="3">
-            <CategoryList info={categoryInfo} />
-          </Col>
+    return (
+      <div>
+        {/* Navi ve diğer componentleri kullanalım (İstediğimiz kadar çağırıp kullanabiliriz.) */}
 
-          <Col xs="9">
-            <ProductList info={productInfo} />
-          </Col>
-        </Row>
-      </Container>
-    </div>
-  );
+        <Container>
+          <Row>
+            <Navi />
+          </Row>
 
-  /*
+          <Row>
+            <Col xs="3">
+              <CategoryList currentCategory={this.state.currentCategory} changeCategory={this.changeCategory} info={categoryInfo} />
+            </Col>
+
+            <Col xs="9">
+              <ProductList currentCategory={this.state.currentCategory} info={productInfo} />
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    );
+  }
+}
+
+/*
 
    - Burada return işlemi direkt olarak bir parantezle başlıyor. Burada bir .jsx yapısı var.  Yani JavaScript XML 
    dediğimiz yapı var. Bu react'ta jsx yapısıdır. Peki nedir bu jsx yapısı? 
@@ -59,6 +73,3 @@ function App() {
    Yani bizim bir ana container tag'ımız olacak (div) ve biz onun içerisine yazacağız. 
     
    */
-}
-
-export default App;

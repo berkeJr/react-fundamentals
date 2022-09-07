@@ -1,0 +1,176 @@
+313.Componentler Arası Veri Ve Event Transferi
+
+
+- Şimdi ise componentler arası veri transferine giriş yapalım. Bizim şimdi bir tane App.js'miz vardı ve onun içerisinde 
+Navi.js, CategoryList.js ve ProductList.js componentlerimiz bulunuyordu. 
+
+
+App.js:
+
+- Navi.js
+- CategoryList.js
+- ProductList.js
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+- Sol tarafta CategoryList componentimiz, onun sağında ise ProductList componentimiz bulunuyor. Bizim istediğimiz şey
+şu; Biz sol tarafta CategoryList içinde örneğin Beverages kategorisine tıklayınca, sağ tarafta ProductList'in altında Beverages'e 
+ait item'ların gelmesini istiyoruz. Yani biz Category List içindeki nesneye tıklayınca oradaki bilginin Product List'e de 
+gitmesini istiyoruz. 
+
+
+- Hatırlatma: Biz React'ta şu an CategoryList'ten ProductList'e data taşıyamıyoruz, sadece App.js'den yani ana kapsayıcı
+componentten onun içindeki (altındaki) componentlere veri taşıyabiliyoruz. 
+
+- Yani biz App'den ProductList'e data taşıyabiliyoruz, peki bu durumda bizim CategoryList'den ProductList'e data
+taşımamız gerekli, o zaman ne yapacağız? Şu anda bunu saf React kullanarak yapacağız, sonrasında ise bu olayı React'taki 
+Redux ile state management yapısını kullanarak daha farklı şekilde gerçekleştireceğiz.
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+- App.js sayfasına gelelim. Orada biz gerekli olan işlemlerimizi function App() fonksiyonu içerisinde yazmıştık. Şimdi
+o fonksiyonu öncelikle bir class componente çevirelim. Yani o fonksiyon içerisindeki bilgileri App class component 
+oluşturup onun içine yazıp, o fonksiyonu da silelim.
+
+
+export default class App extends Component {
+  render() {
+
+    let categoryInfo = { title: "CategoryList"};
+    let productInfo = { title: "ProductList" };
+
+    return (
+      <div>
+        <Container>
+          <Row>
+            <Navi />
+          </Row>
+
+          <Row>
+            <Col xs="3">
+              <CategoryList info={categoryInfo} />
+            </Col>
+
+            <Col xs="9">
+              <ProductList info={productInfo} />
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    );
+  }
+}
+
+
+- Daha sonra App.js'de bulunan 
+import React from "react"; kısmını silelim 
+
+- Ve de App.js'ye 
+import React, { Component } from "react"; kısmını ekleyelim 
+
+
+-  let categoryInfo = { title: "CategoryList"};
+   let productInfo = { title: "ProductList" };
+
+değişkenlerini de render() fonksiyonu içerisine yazalım. 
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+- Şu anda kodumuz aynen çalışır. Biz sadece function App() yapısını class componente çevirdik. Çünkü
+biz CategoryList.js'de yazdığımız changeCategory kodunu mecburen bu App içerisinde taşıyacağız. Çünkü bizim istediğimiz
+şey aslında şu: Sol tarafta bulunan CategoryList componenti içerisinde bir kategoriye tıklandığında, sağ tarafta 
+ProductList componentinde o kategoriye ait item'lar listelensin. Bu durumda componentler arası veri-event transferine
+ihtiyacımız var. Yani CategoryList'e ait changeCategory() fonksiyonunun ProductList'ti tetiklemesini ve onClick ile 
+tıklanan kategoriye ait item'ların gelmesini istiyoruz. Fakat React'ta sadece bir componentten bir alttaki componente 
+veri transferi mevcut, yani biz aynı hieyerarşideki 2 component arasında düz React kullanarak böyle bir data-event 
+transferi gerçekleştiremiyoruz. Bu durumda changeCategory() fonksiyonunu CategoryList'ten App.js'ye taşıyıp, 
+veri transferini oradan ProductList'e olacak şekilde gerçekleştireceğiz. Bu sebeple, App.js'de changeCategory()
+fonksiyonunu yazabilmek için App'yi normal fonksiyon durumundan class componente dönüştürdük.
+
+
+- CategoryList.js'ye gidelim ve şu kısmı keselim: 
+  changeCategory = (category) => {
+    this.setState({ currentCategory: category.categoryName });
+  };
+
+
+- Kestiğimiz o kısmı, changeCategory kısmını App.js'de class componenti içerisine koyalım. Yani şu anda 
+App class componenti içerisinde bir fonksiyon render() bir fonksiyon da changeCategory() fonksiyonu oldu. 
+
+
+- Biz onClick eventini kullanmıştık (changeCategory() fonksiyonu ile). Şu anda changeCategory() fonksiyonunu 
+CategoryList'ten alıp, App.js ye taşıdık, o yüzden changeCategory'yi App.js'de return içerisinde CategoryList'e
+props olarak yollamamız gerekli. 
+
+<CategoryList changeCategory={this.changeCategory} info={categoryInfo} />
+
+
+- Bu işlem ile CategoryList'e props ile bir event yolluyoruz. Bu olayın aslında değişken taşımayla bir farkı yok. 
+Çünkü JavaScript'te fonksiyonlarda aslında değişkendir. 
+
+
+- Daha sonra CategoryList.js'ye gidelim, orada onClick içerisinde fonksiyona 
+this.props.changeCategory(category) yazalım
+
+- Bu şekilde yazdık, çünkü artık changeCategory'yi App.js'den props ile taşıyoruz. 
+
+
+- Ayrıca CategoryList.js içerisinde state içindeki 
+currentCategory: ""
+kısımı kesip App componentinde bir state içerisinde yazalım 
+
+state = {
+    currentCategory: ""  // Tıklama eventi ile tıklanan kategorinin ismini yazdırmak için kullancağız. 
+}
+
+
+- Sonra ise App componenti içindeki CategoryList'e currentCategory'yi de yollayalım
+<CategoryList currentCategory={this.state.currentCategory} changeCategory={this.changeCategory} info={categoryInfo} />
+
+
+- Son olarak CategoryList.js'de return içerisinde şunu yazalım: 
+<h4>{this.props.currentCategory}</h4>
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+- Biz şimdiye kadar şunları yaptık:
+
+
+* CategoryList'teki changeCategory'yi App.js içerisinde App class componenti oluşturup orada yazdık. Çünkü biz 
+currentCategory yazısını ProductList'e de geçmek istiyoruz. React'te sadece ana kapsayıcı component'ten içteki 
+componente taşıma olduğu için kategori değiştirmeye yönelik her şeyi App içerisine taşıdık. 
+
+
+* Daha sonra App.js içerisinde changeCategory() fonksiyonunu App.js return içindeki CategoryList'e props olarak kullandık. 
+
+
+* Daha sonra CategoryList'te 
+this.props.changeCategory(category)
+ile eventi kullandık. 
+
+
+* Daha sonra currentCategory'yi de App.js'de return içindeki CategoryList'e props olarak yolladık
+currentCategory={this.state.currentCategory}
+
+
+* Daha sonra ise CategoryList'te props ile currentCategory'yi yazdırdık. ,
+<h4>{this.props.currentCategory}</h4>
+
+
+Note: State değiştiği anda o state'i kullanan tüm componentler yeniden render edilir. Örneğin currentCategory.
+
+
+- Biz böylelikle currentCategory'yi alıp App.js içindeki ProductList'e de taşıyabiliriz. 
+<ProductList currentCategory={this.state.currentCategory}
+
+
+- Ve son olarak da ProductList.js sayfasına gidip : this.props.currentCategory'yi de kullanırız. 
+<h3>{this.props.info.title}-{this.props.currentCategory}</h3>
