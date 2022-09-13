@@ -1,0 +1,43 @@
+315.ComponentDidMount Ve Fetch İle Çalışmak
+
+
+- Artık CategoryList ve ProductList için data'mızı API'dan getirmek istiyoruz. Bu kapsamda Category List için 
+CategoryList.js'de getCategories isimli bir fonksiyon oluşturup operasyonlarımızı yönetebiliriz. 
+
+- Bunun için CategoryList.js'de component içerisinde render() fonksiyonu üzerinde getCategories() isimli    
+bir arrow function oluşturalım.
+
+- getCategories fonksiyonu içerisinde API'ye ulaşma işlemini 'Fetch API' ile yapacağız. Fetch bir promise 
+döndürüyor.  
+
+
+getCategories = () => {
+    fetch("https://localhost:3000/categories")
+    .then(response=>response.json())                 // gelen response için response'u json'a döndürüyoruz 
+    .then(data=>this.setState({categories:data}));   // bu component için state'in category değerini değiştirip data yapıyoruz.
+    // yani böylece API'dan json olarak dönen response'u data olarak bu componentin state'ine atıyoruz.
+}
+
+
+- Şu anda artık biz kategorileri API'dan alacağımız için CategoryList'deki state içerisinde oluşturduğumuz
+categories array'ini silebiliriz. 
+
+
+- Şu anda getCategories fonksiyonu ile Categories için API'a erişim sağladık ve state içerisinde önceden kendimiz oluşturduğumuz
+categories array'inin içini boşalttık, fakat şu anda sayfada herhangi bir data gelmeyecek, çünkü getCategories fonksiyonunu 
+oluşturduk ama henüz kullanmadık. 
+
+
+- Biz bu getCategories fonksiyonunu yazınca aslında şu oldu. React'ta bir yaşam döngüsü söz konusu. React sayfasında 
+önce componentler yerleşiyor, sonra componentlerin render'ları çalışıyor. Dolayısıyla burada bizim ayrıca bir LifeCycle
+eventimiz var. componentDidMount() : yani component mount oldu yerleşti.
+
+
+- componentDidMount() eventini getCategories fonksiyonu üzerinde yazarak getCategories fonksiyonunu kullanabiliriz. 
+
+componentDidMount(){
+    this.getCategories();
+}
+
+
+- Not: map() fonksiyonu bir arraye uygulanır. 
