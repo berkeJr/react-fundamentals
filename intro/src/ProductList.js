@@ -31,7 +31,7 @@ export default class ProductList extends Component {
             {this.props.products.map((product) => (
               <tr key={product.id}>
                 <th scope="row">{product.id}</th>
-                <td>{product.name}</td>
+                <td>{product.productName}</td>
                 <td>{product.unitPrice}</td>
                 <td>{product.quantityPerUnit}</td>
                 <td>{product.unitsInStock}</td>

@@ -44,7 +44,7 @@ export default class CategoryList extends Component {
           ))}
         </ListGroup>
 
-        <h4>{this.props.currentCategory}</h4>
+        {/* <h4>{this.props.currentCategory}</h4> */}
       </div>
     );
   }

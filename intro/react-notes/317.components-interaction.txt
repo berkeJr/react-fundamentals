@@ -1,0 +1,41 @@
+317.Componentler Arası İletişim Trafiğinin Yönteilmesi
+
+
+- Şu anda biz bütün Product'ları API'deki datadan çekerek listeledik ve şimdi de şunu istiyoruz. Biz sol tarafta
+herhangi bir kategoriye tıkladığımızda o kategorinin product'larının listelenmesini istiyoruz. 
+
+
+- Öncelikle App.js'ye gidelim ve getProducts() fonksiyonunu şekillendirelim. Burada fonksiyona bir parametre verelim,
+categoryId'i parametre olarak yazalım. 
+
+
+- App.js'ye gelelim. 
+
+getProducts = (categoryId) => {
+    let url = "http://localhost:3000/products";
+
+    if (categoryId) {
+      url += "?categoryId" + categoryId;
+    }
+
+    fetch()
+      .then((response) => response.json())                 // response'u json'a döndürüyoruz
+      .then((data) => this.setState({ products: data }));  // state'in product değerini değiştirip data yapıyoruz.
+  };;
+
+
+
+- Burada önemli nokta şu: Biz sol tarafta kategorilerde herhangi bir kategoriye tıklayınca getProducts() fonksiyonunun
+bir daha çalışmasını istiyoruz. Yani bizim kategoride getProducts'ı çağırabilmemiz gerekli. Ama bakıyoruz CategoryList'de 
+getProducts yok. Bu durumda biz getProducts() eventini CategoryList'e porps ile yollayabiliriz ya da App.js'de bizim zaten 
+CategoryList'ten tetiklediğimiz bir fonksiyon vardı: changeCategory(). İşte o fonksiyon içerisinde tıklama eventini
+yazabiliriz. Biz burada bu 2. dediğimizi yapacağız. 
+
+
+ changeCategory = (category) => {
+    this.setState({ currentCategory: category.categoryName });
+    this.getProducts(category.id);
+  };
+
+- App.js'de changeCategory CategoryList'ten tetiklenecek, getProducts'ı çağırırız, daha sonra product state'imiz değişiyor, 
+product state'imiz değiştiği için, o state'i de ProductList kullanıyor dolayısıyla ProductList yeniden render edilecek.  
