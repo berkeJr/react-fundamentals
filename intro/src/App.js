@@ -17,6 +17,7 @@ export default class App extends Component {
   state = {
     currentCategory: "", // Tıklama eventi ile tıklanan kategorinin ismini yazdırmak için kullancağız.
     products: [],
+    cart: [],
   };
 
   // onClick fonksiyonu çalıştığında bu fonksiyonu çalıştırır.
@@ -25,21 +26,39 @@ export default class App extends Component {
     this.getProducts(category.id);
   };
 
-  componentDidMount(){
+  componentDidMount() {
     this.getProducts();
   }
 
   getProducts = (categoryId) => {
     let url = "http://localhost:3000/products";
 
-    if(categoryId){
+    if (categoryId) {
       url += "?categoryId=" + categoryId;
     }
 
     fetch(url)
-      .then((response) => response.json())                  // response'u json'a döndürüyoruz
-      .then((data) => this.setState({ products: data }));   // state'in product değerini değiştirip data yapıyoruz.
-  }
+      .then((response) => response.json()) // response'u json'a döndürüyoruz
+      .then((data) => this.setState({ products: data })); // state'in product değerini değiştirip data yapıyoruz.
+  };
+
+  // Sepete Ekleme Operasyonu
+  addToCart = (product) => {
+    let newCart = this.state.cart;
+
+    // Ürün daha önce eklenmiş mi:
+    var addedItem = newCart.find((c) => c.product.id === product.id); // her bir cart item (c=>) için
+
+    // Eğer ürün listeye daha önce eklenmişse, ürünü tekrar ekleme, sadece miktarını 1 arttır.
+    if (addedItem) {
+      addedItem.quantity += 1;
+    } else {
+      // newCart array'ine (sepete) yeni eleman ekleme işlemi (gönderilen elamanı 1 adet gönderiyoruz.)
+      newCart.push({ product: product, quantity: 1 });
+    }
+
+    this.setState({ cart: newCart }); // state değeri değiştikten sonra da yeniden set ediyoruz.
+  };
 
   render() {
     let categoryInfo = {
@@ -55,9 +74,7 @@ export default class App extends Component {
         {/* Navi ve diğer componentleri kullanalım (İstediğimiz kadar çağırıp kullanabiliriz.) */}
 
         <Container>
-          <Row>
-            <Navi />
-          </Row>
+          <Navi cart={this.state.cart} />
 
           <Row>
             <Col xs="3">
@@ -71,6 +88,7 @@ export default class App extends Component {
             <Col xs="9">
               <ProductList
                 products={this.state.products}
+                addToCart={this.addToCart}
                 currentCategory={this.state.currentCategory}
                 info={productInfo}
               />

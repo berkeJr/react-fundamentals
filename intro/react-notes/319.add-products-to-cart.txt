@@ -1,0 +1,121 @@
+319.Sepete Ürün Eklemek
+
+
+- Projemizin herhangi bir alışveriş sitesi olduğunu düşünelim. Product List'te her bir ürün için en sağda bir buton 
+olsun ve o butona tıklayınca ürünler sepete eklensin. 
+
+
+- Bunun için reactstrap'e gidelim ve oradan bir buton alalım. 
+<Button color="primary"> Add To Cart </Button>
+
+
+- Daha sonra ProductList.js'ye gidelim. Orada buton için ayrıca bir kolon ekleyelim. Ve butonu da td etiketleri 
+içerisine koyalım. Daha sonra Button'u da reactstrap'ten aldığımız için import edelim:
+
+import {Button} from 'reactstrap';
+
+<td>
+    <div>
+        <Button color="primary">Add To Cart</Button>
+    </div>
+</td>
+
+
+- Şimdi biz herhangi bir product için Add To Cart butonuna tıkladığımızda sepete ekleme işlemini gerçekleştirmesini
+istiyoruz. Bunun için ProductList.js'ye gelelim. ProductList componenti içerisinde render() fonksiyonu üzerinde 
+bir fonksiyon oluşturalım: 
+
+addToCart = (product) => {
+    alert(product.productName);
+};
+
+
+- Daha sonra ise yine ProductList.js'de butonu oluşturduğumuz yerde onClick eventini kullanıp addToCart fonksiyonunu 
+kullanmamız gerekli:
+
+<Button onClick={()=>this.addToCart(product)} color="info">Add To Cart</Button>
+
+- Şu anda Add To Cart butonuna tıkladığımızda tıklanan ürünün adı alert olarak ekranda yazdırılır.
+
+
+- Ayrıca sepet bilgisini navi'de göstermek istiyoruz. Yani 'Add To Cart' butonuna tıkladığımızda navbar'da bir 
+sepet özeti olsun ve orada gösterilsin. Bizim bu Add To Cart operasyonumuzun App.js'de olması gerekiyor. Çünkü 
+bizim sepeti yönetmemiz gerekiyor ve o sepeti göstermemiz gerekiyor. Yani data transferini yapmamız gerekecek.
+
+Eğer ki bu durumda sepeti (addToCart operasyonunu) ProductList.js'de oluşturursak oradan Navi.js'ye transfer etmemiz 
+düz React ile mümkün olmaz. Çünkü React ile sadece Ana componentten bir alttaki componente veri transferi yapılır.
+Bu sebeple addToCart() operasyonumuzu App.js'de oluşturmamız gerekli.
+
+
+- Reactstrap'ten bir de navbar alalım ve de Navi.js'de navbar oluşturalım. 
+
+
+- Şimdi biz herhangi bir ürün için Add To Cart butonuna basınca o ürünün navbar'daki options yerine sepete eklenmesini
+istiyoruz.
+
+
+- Yani biz butona basınca sepet nesnesini alıp navi'ye de göndermemiz gerekiyor. Bu sebeple ProductList.js'deki
+addToCart fonksiyonunu oradan keselim ve App.js'de getProducts() fonksiyonu bittikten sonraki yere koyalım.
+
+
+- Biz artık addToCart fonksiyonuna sepete ekleme işlemini yazabiliriz. Peki sepet ne olacak? Sepet tıpkı 
+currentCategory, ve products gibi bir state olacak. Dolayısıyla App.js'de state'e cart ekleyelim. 
+state = { currentCategory: "", products: [], cart: [] };
+
+
+- Şimdi ise addToCart fonksiyonu içerisine gelelim ve operasyonumuzu yazalım. İlk olarak state olarak tuttuğumuz 
+cart'ı, addToCart() fonksiyonu içerisinde bir değişkene atayalım.
+let newCart = this.state.cart;
+
+
+- Biz cart'ın içerisinde şöyle bir data tutmak istiyoruz: Bir eklenen product'ı bir de quantity yani miktarını 
+tutmak istiyoruz. Çünkü aynı üründen sepete eklenmek istendiğinde tekrar tekrar o ürünü yazmasın, sadece ürünün 
+miktarını arttırsın. O sebeple bir ürün için daha önce eklenmiş mi kontrolü yaparız.
+
+var addedItem = newCart.find(c=>c.productId === product.id);
+
+
+- Ya da o kontrolü şu şekilde de yapabiliriz:
+
+newCart.push({product:product, quantity:1});
+this.setState({cart:newCart});
+
+
+- Daha sonra App.js'den ProductList'e bizim addToCart fonksiyonunu göndermemiz gerekiyor:
+
+- Bunun için App.js'de props yazarız
+addToCart={this.addToCart}
+
+
+- Sonrasında ise ProductList.js'de butona addToCart fonksiyonunu props'la göndeririz:
+
+<Button onClick={()=>this.props.addToCart(product)} color="info">Add To Cart</Button>
+
+
+- Peki oluşan o cart nesnesini, yani state'i ne yapacağız. State'i de Navi'ye gödermemiz gerekiyor. App.js'de
+Navi'ye şunu yazarız:
+
+<Navi cart={this.state.cart} />
+
+
+- Navi.js,'ye gidelim, süslü parantez içindeki kod ile sepetteki eleman sayısını öğreniriz: 
+ 
+<DropdownToggle nav caret>
+    Options - {this.props.cart.length}
+</DropdownToggle>
+
+
+- Bir de az önce addedItem şeklinde bir değişken oluşturmuştuk. Burada amacımız şu: 
+
+Sepete eklenen ürünün daha önce eklenmiş olmasının kontrol edilmesi ve ürün daha önce eklenmişse ürünü tekrar eklemeyip 
+sadece mikatarını (quantity) 1 arttırma işlemini gerçekleştirmek ve eğer ürün daha önce eklenmemişse ürün ekleme işlemini
+sağlamak:
+
+// Eğer ürün listeye daha önce eklenmişse, ürünü tekrar ekleme, sadece miktarını 1 arttır.
+if (addedItem) {
+    addedItem.quantity += 1;
+} 
+else {
+    // newCart array'ine (sepete) yeni eleman ekleme işlemi (gönderilen elamanı 1 adet gönderiyoruz.)
+    newCart.push({ product: product, quantity: 1 });
+}
