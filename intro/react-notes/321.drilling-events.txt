@@ -1,0 +1,46 @@
+321.Component Drilling ile Event Taşıma 
+
+
+- Cart'a ürünleri ekleme işlemini gerçekleştirdik. Ayrıca ürünlerin sayılarını da Cart'ta Badge ile yazdırdık. 
+Şimdi de ürünlerin isimlerinin sol tarafında bir tane silme butonu oluşturup ilgili ürünü sepetten 
+silme işlemini yazalım. 
+
+
+- CartSummary.js'ye cart ile ilgili data aslında props'la geliyor. Yani aslında Cart ile ilgili işlemleri 
+App.js'de yönetiyoruz. O sebeple nasıl ki addToCart() fonksiyonunu App.js'de yazdıysak 
+removeFromCart() fonksiyonunu da App.js'de yazmamız gerekir.
+
+
+- App.js'ye gelelim ve addToCart() fonksiyonunun altında (dışında) removeFromCart() fonksiyonunu yazalım:
+
+removeFromCart = (product) => {
+    // js'deki filter fonksiyonunu kullanalım:
+    let newCart = this.state.cart.filter(c=>c.product.id !== product.id);  // her bir cart item (c) için
+
+    /* Burada filter fonksiyonu bir array'deki elemanları parantez içerisindeki şarta göre filtreliyor. Yani gönderdiğimiz
+    id'nin dışında kalanları filtreler. */
+
+    this.setState({cart: newCart});  // state değiştiği anda o state'i kullanan herkes güncellenir.
+}
+
+
+- removeFromCart() fonksiyonunu App.js'de yazdık. Fakat bu fonksiyonu App.js altında bulunan Navi.js'nin altındaki 
+CartSummary.js'de kullanmamız, yani eventi oraya Component Drilling ile taşımamız gerekli. 
+
+
+- Bu sepeble App.js'de çağırdığımız Navi'ye removeFromCart'ı yollayalım
+<Navi removeFromCart={this.removeFromCart} cart={this.state.cart} />
+
+
+- Şimdi de bunu Navi'den CartSummary'ye göndermemiz gerekli:
+
+
+- Dolayısıyla Navi.js'de kullandığımız CartSummary ile props aracılığıyla bu eventi CartSummary'ye yollarız:
+<CartSummary removeFromCart={this.props.removeFromCart} cart={this.props.cart} />
+
+
+- Şimdi artık CartSummary.js'ye gelip ilgili işlemi gerçekleştirebiliriz.
+
+
+- Bunun için her bir dropdown item'a silme işlemi yapacak olan Badge ekleyelim:
+<Badge color="danger" onClick={()=>this.props.removeFromCart(cartItem.product)}>X</Badge>

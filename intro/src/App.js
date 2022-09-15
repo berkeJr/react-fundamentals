@@ -60,6 +60,16 @@ export default class App extends Component {
     this.setState({ cart: newCart }); // state değeri değiştikten sonra da yeniden set ediyoruz.
   };
 
+  removeFromCart = (product) => {
+    // js'deki filter fonksiyonunu kullanalım:
+    let newCart = this.state.cart.filter(c=>c.product.id !== product.id);  // her bir cart item (c) için
+
+    /* Burada filter fonksiyonu bir array'deki elemanları parantez içerisindeki şarta göre filtreliyor. Yani gönderdiğimiz
+    id'nin dışında kalanları filtreler. */
+
+    this.setState({cart: newCart});  // state değiştiği anda o state'i kullanan herkes güncellenir.
+  }
+
   render() {
     let categoryInfo = {
       title: "Category List",
@@ -74,7 +84,7 @@ export default class App extends Component {
         {/* Navi ve diğer componentleri kullanalım (İstediğimiz kadar çağırıp kullanabiliriz.) */}
 
         <Container>
-          <Navi cart={this.state.cart} />
+          <Navi removeFromCart={this.removeFromCart} cart={this.state.cart} />
 
           <Row>
             <Col xs="3">
