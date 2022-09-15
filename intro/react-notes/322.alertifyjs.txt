@@ -1,0 +1,46 @@
+322.Alertify.js İmplementasyonu
+
+
+- Şimdi de başka paketleri uygulamamıza nasıl ekleyeceğimize dair bir örnek yapalım. 
+
+- Şu anda biz sepete herhangi bir ürün eklediğimiz zaman kullanıcı sepete ürünün eklenip eklenmediğini ilk etapta 
+bilmiyor, bunun için sepete tıklayıp kontrol etmesi gerekli. Fakat ürün ekleme işlemi yapıldığında kullanıcı 
+bilgilendirilebilir. Bu işlem için aslında birçok açık kaynak ürün mevcut, bunlardan birisi de 'Alertify.js'
+ve biz burada bunu kullanıyor olacağız.
+
+
+- Bunun için command prompt'ta intro projemize locate olup npm'den alertifyjs paketini indirelim:
+npm install alertifyjs
+
+
+- Daha sonra src klasörü içindeki index.js'ye gidelim. Hatırlarsak Reactstrap'i npm'den indirdikten sonra 
+index.js'de   =>   import 'bootstrap/dist/css/bootstrap.min.css';    şeklinde dahil etmmiştik.
+
+
+- Aynı şekilde alertifyjs'yi de index.js'de import edelim.
+import 'alertifyjs/build/css/alertify.min.css';
+
+
+- Biz sepete yeni ürünü App.js'de yazdığımız addToCart() fonksiyonu ile ekliyorduk. Bu noktada buraya gelip 
+kodumuzu buraya yazabiliriz. Tabi Alertify'ı App.js'de kullanacağımız için de App.js'de import etmemiz gerekli.
+import alertify from 'alertifyjs';
+
+
+- Ayrıca package.json dosyamıza baktığımızda alertifyjs'nin dependencies'e dahil edildiğini görürüz:
+"alertifyjs": "^1.13.1"
+
+
+- Artık addToCart()'a gelip kodumuzu yazabiliriz.
+// alertifyjs
+alertify.success(product.productName + "added to cart!");
+
+
+- Bu şekilde ürün eklendikten sonra çalışması için yazabiliriz. Eğer alertify hakkında daha fazla bilgi edinmek istersek de 
+kendi resmi dökümantasyonunu inceleyebiliriz. 
+
+
+
+
+
+
+ 

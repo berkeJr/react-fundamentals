@@ -12,10 +12,13 @@ import ProductList from "./ProductList";
 // ReactStrap'den kullanmak istediğimiz component'leri import etmemiz gerekli.
 import { Container, Row, Col } from "reactstrap";
 
+// Alertifyjs'yi import edelim
+import alertify from 'alertifyjs';
+
 // App Class Componenti:
 export default class App extends Component {
   state = {
-    currentCategory: "", // Tıklama eventi ile tıklanan kategorinin ismini yazdırmak için kullancağız.
+    currentCategory: "", // Tıklama eventi ile tıklanan kategorinin ismini yazdırmak için kullanacağız.
     products: [],
     cart: [],
   };
@@ -58,6 +61,9 @@ export default class App extends Component {
     }
 
     this.setState({ cart: newCart }); // state değeri değiştikten sonra da yeniden set ediyoruz.
+
+    // alertifyjs
+    alertify.success(product.productName + " added to cart!", 2);  // 2 saniye kalsın (süreyi yazmasak da olur)
   };
 
   removeFromCart = (product) => {
@@ -68,6 +74,9 @@ export default class App extends Component {
     id'nin dışında kalanları filtreler. */
 
     this.setState({cart: newCart});  // state değiştiği anda o state'i kullanan herkes güncellenir.
+
+    //alertifyjs
+    alertify.warning(product.productName + " deleted from cart!");
   }
 
   render() {
