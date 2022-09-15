@@ -1,0 +1,130 @@
+320.Component Drilling
+
+
+- Biz şimdiye kadar Add To Cart butonu ile sepete ürün ekliyorduk ve de navbar'daki Cart- yazısında ürün 
+sayılarını gösteriyorduk. (Tabi ayrıca aynı ürünü 2 sefer eklemiyordu, sepet içerisinde sayısını arttırıyordu.)  
+Şimdi de sepete ürün eklediğimiz zaman ürün isimlerinin Cart- 'a tıklayınca gözükmesini istiyoruz. 
+
+
+- Bunun için src klasöründe CartSummary.js isimli bir dosya oluşturalım. Bu işlemleri CartSummary.js içerisinde 
+ayrı bir Component olarak gerçekleştireceğiz ki amacımız o componentler arası veri trafiğini yönetmek için iç içe 
+componentlerde nasıl bir davranışta bulunuyoruz, bu durumu görebilmek. Bu olaya 'Component Drilling' deniyor. 
+
+
+- CartSummary.js'de rcc yazıp enter'a basalım ve class componentimiz oluşsun. 
+
+
+- CartSummary.js'de Cart- ile başlayan componentimizi yerleştirmek istiyoruz. Navi.js'ye gidelim. 
+Cart- kısmının olduğu UncontrolledDropdown tag'lerini tamamen alalım ve CartSummary'de div'in içerisine koyalım. Tabi
+kullandığımız elemanları da reactstrap'ten import edelim. 
+
+
+- Daha sonra Navi.js'de div içerisinde en altta CartSummary'yi çağırmamız gerekli.
+<CartSummary />
+
+
+- Navi.js'de CartSummary'yi çağırdığımız (kullandığımız) için yine orada (Navi.js) import etmemiz gerekli
+import CartSummary from "./CartSummary";
+
+
+- Bu işlemi yapınca uygulamamız hata verecek, çünkü App.js'den Navi.js'ye props ile şu şekilde data taşımıştık:
+Cart - {this.props.cart.length}
+
+
+- Şu anda UncontrolledDropdown'ı CartSummary.js'ye taşıdık fakat henüz orada bir karşılığı yok. Burada o işlemi 
+gerçekleştireceğiz.
+
+
+- Öncelikle şu anda hiyerarşi yapımız şu şekilde. App.js en kapsayıcı, ana component. Onun içerisinde Navi.js, onun da içerisinde 
+CartSummary.js bulunuyor. Biz Cart için App.js'den Navi.js'ye veri aktarımı yapmıştık, şimdi de Navi.js'den 
+CartSummary.js'ye aktarmamız gerekli. Bu işlem; data'nın bir componentten onun altına, oradan da onun altına taşınması
+şeklinde açıklanabilir, buna da 'Component Drilling' denir. React'ta doğrudan App.js'den CartSummary.js'ye veri 
+transferi yok. (Yani düz React ile doğrudan 2 kademe alttaki componente veri taşıyamayız.)
+
+
+- Dolayısıyla Navi.js'de şu işlemi yaparız: 
+
+<CartSummary cart={this.props.cart}/>
+
+
+- Durumumuz şu: App.js'de cart isminde bir state'imiz var. Biz cart state'ini App.js'de çağırdığımız Navi.js ile 
+props kullanarak Navi.js'ye gönderiyoruz:
+<Navi cart={this.state.cart} />
+
+
+- Daha sonra da Navi.js'ye geliyoruz. Orada çağırdığımız CartSummary ile props kullanarak CartSummary'ye gönderiyoruz.
+<CartSummary cart={this.props.cart} />
+
+
+- Şu anda artık CartSummary.js'ye gelip cart'ı kullanabiliriz:
+<DropdownToggle nav caret>
+    Cart - {this.props.cart.length}
+</DropdownToggle>
+
+
+- Şu anda Cart, ilk durumda olduğu gibi çalışır hale geldi. 
+
+
+- Biz şu anda Navbar'da Cart'a tıklayınca açılan sekmede hangi ürünlerin eklendiğini görmek istiyoruz. 
+
+
+- CartSummary'ye geliriz. Option'ların olduğu kısmı döngüye alıp js ile ilgili kodu yazarız.
+
+<DropdownMenu right>
+    {this.props.cart.map(
+        (cartItem) => (
+        <DropdownItem key={cartItem.product.id}>
+            {cartItem.product.productName}
+        </DropdownItem>
+        )
+        // cartItem'ın quantity'si ve name'i var
+    )}
+
+    <DropdownItem divider />
+    <DropdownItem>Reset</DropdownItem>
+</DropdownMenu>
+
+
+- Şu anda Cart'a eklenen ürünler listede gözüküyor. Şu anda istediğimiz ise, her bir eklenen üründen kaç tane eklendiği
+ürünün adının yanında yazsın. Bunun için DropdownItem'a şunu ekleriz:
+<Badge color="success">{cartItem.quantity}</Badge>
+
+
+- Badge ReactStrap - BootStrap'ten geliyor. 
+
+
+- Şimdi mesela sepette eleman yoksa NavBar'da Your Cart yazısı gözükmesin. Bunun için CartSummary.js'de 
+bir şartlı blok çalıştıracağız. 
+
+
+- Şimdi CartSummary.js'ye gidelim. render()'ın üzerinde (dışında) renderSummary() şeklinde bir fonksiyon oluşturalım ve de 
+UncontrolledDropdown'ı o fonksiyon içerisine taşıyalım. 
+
+
+- renderSummary() fonksiyonu içerisinde jsx yazacağımız için return() kullanıp jsx'i (UncontrolledDropdown'ı) o parantez
+içerisine yazarız. 
+
+
+- UncontrolledDropdown'ı renderSummary() fonksiyonu içerisine taşıdıktan sonra render() içerisinde
+{this.renderSummary()}   =>   şeklinde çağırırız ki renderSummary() fonksiyonunu kullanabilelim.
+
+
+- Eğer sepetin uzunluğu 0'dan büyükse renderSummary() fonksiyonunu çalıştır, eğer değilse boş bir div döndür. 
+Yani sepette ürün yoksa 'Your Cart' yazısı gözükmesin:
+{this.props.cart.length>0?this.renderSummary():<div></div>}
+
+
+- Empty Cart yazısını döndürmek için de CartSummary.js'de ayrıca renderEmptyCart() isimli bir fonksiyon oluşturalım.
+(render()'ın ve renderSummary()'nin dışında)
+
+renderEmptyCart(){
+    return(
+      <NavItem>
+        <NavLink>Empty Cart</NavLink>
+      </NavItem>
+    )
+}
+
+
+- Daha sonra eğer sepet boşsa renderEmptyCart() fonksiyonu çalışsın:
+{this.props.cart.length>0?this.renderSummary():this.renderEmptyCart()}
