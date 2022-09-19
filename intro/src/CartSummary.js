@@ -17,7 +17,7 @@ export default class CartSummary extends Component {
           <DropdownToggle nav caret>
             Your Cart - {this.props.cart.length}
           </DropdownToggle>
-          <DropdownMenu right>
+          <DropdownMenu>
             {this.props.cart.map(
               (cartItem) => (
                 <DropdownItem key={cartItem.product.id}>

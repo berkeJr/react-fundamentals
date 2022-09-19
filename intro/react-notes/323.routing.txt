@@ -1,0 +1,92 @@
+323.Routing İmplementasyonu
+
+
+- Şimdi burada yeni bir konu olan Routing'e geçelim. React'la çalışırken bizim uygulamalarımız aslında SPA. Yani
+'Single Page Application'. Tek bir index.html dosyamız var, ve aslında componentler değişiyor. Örneğin; 
+Navi.js, CategoryList.js, ProductList.js ve CartSummary.js isminde 4 componentimiz ana componentimiz olan 
+App.js içerisinde yer alıyordu. 
+
+
+- Örneğin ana sayfadayız. Kategoriler ve ürünler gösteriliyor. Ve biz sepet detayına gitmek istediğimizde sayfada ProductList 
+olan yerde (ürünler) onun yerine sepet detayının gelmesini istiyoruz. Veya yanlış bir route yazıldığında burada başka bir 
+'NotFound' componentinin gelmesini istiyoruz. İşte bu işlemi biz 'Routing' ile gerçekleştiriyoruz. 
+
+
+- Routing'i kullanabilmek için öncelikle sisteme dahil etmek gerekiyor. Bunun için command prompt'ta (komut satırı)
+react projemize (intro) locate olduktan sonra şu komutu çalıştırmamız gerekli:
+
+npm install react-router-dom 
+
+
+- Bu komutu çalıştırdıktan sonra package.json dosyamızda dependencies'e react-router-dom'un eklendiğini görürüz.
+"react-router-dom": "^6.4.0"
+
+
+- Şimdi de src klasörüne bir kaç dosya ekleyelim: 
+NotFound.js
+
+
+- NotFound.js dosyasına gidelim, rcc ile class component oluşturalım ve div içerisine 'Not Found!' yazalım. 
+Yanlış bir route kullanıldığında bu componentin çalışmasını isteyeceğiz. 
+
+
+- Daha sonra src klasörüne bir de CartList.js dosyasını ekleyelim ve o dosyaya gidip rcc ile 
+class componenti oluşturalım. 
+
+
+- App.js'de ProductList componentini çağırarak kullanmıştık, değiştirmek istediğimiz yer orası olsun. 
+Yani aslında 'routing' kullanarak componenti değiştiriyor olacağız. 
+
+
+- Peki routing'i sistemimize nasıl dahil ediyoruz? Bunun için src klasöründe yer alan index.js dosyasına gidelim.
+import {BrowserRouter} from 'react-router-dom'; 
+
+yazarak import ettikten sonra; 
+
+index.js'de render() fonksiyonu içerisinde bulunan <App /> yi <BrowserRouter></BrowserRouter> 
+içerisinde yazmamız gerekir. 
+
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>
+);
+
+
+- Şu anda sistemde route yapısını eklemek istiyoruz. Bunun için App.js'ye gidelim. App.js'de kullandığımız
+ProductList'in olduğu yerde bu işlemi yapacağız. 
+
+
+- İlk olarak NotFound.js ve CartList.js componentlerini App.js'de import edelim.
+
+
+- Rotuer'ı kullanmak için de öncelikle react-router-dom'dan kullanacaklarımızı import edelim:
+import {Route, Routes} from 'react-router-dom';
+
+
+- <Route /> aslında componentin değşimesini istediğimiz yer. 
+
+
+<Routes>
+  <Route
+    exact
+    path="/"
+    element={
+      <ProductList
+        products={this.state.products}
+        addToCart={this.addToCart}
+        currentCategory={this.state.currentCategory}
+        info={productInfo}
+      />
+    }
+  />
+
+  <Route exact path="/cart" element={<CartList />} />
+  
+  <Route exact path="*" element={<NotFound />} />
+</Routes>
+
