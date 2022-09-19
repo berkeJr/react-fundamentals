@@ -85,7 +85,7 @@ export default class App extends Component {
     this.setState({ cart: newCart }); // state değiştiği anda o state'i kullanan herkes güncellenir.
 
     //alertifyjs
-    alertify.warning(product.productName + " deleted from cart!");
+    alertify.error(product.productName + " removed from cart!");
   };
 
   render() {
@@ -127,7 +127,7 @@ export default class App extends Component {
                     />
                   }
                 />
-                
+
                 <Route
                   exact
                   path="/cart"

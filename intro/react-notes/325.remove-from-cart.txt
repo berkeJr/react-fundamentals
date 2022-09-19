@@ -1,0 +1,24 @@
+325.Sepetten Silme İşleminin Gerçekleştirilmesi
+
+
+- Şimdi de sepetten ürün silme işlemini gerçekleştirelim. Bunun için yine CartList.js'ye gidelim.
+
+
+- CartList'te Table içerisine buton ekleyelim. 
+<td>
+    <Button
+        color="danger"
+        onClick={() => this.props.removeFromCart(cartItem.product)}
+    >
+        Remove
+    </Button>
+</td>
+
+- Remove butonu onClick olduğunda önceden oluşturduğumuz removeFromCart() fonksiyonunu props olarak alıp çalıştırıyoruz ve 
+cartItem'ın product'ını parametre olarak gönderiyoruz. Böylece cart'ta tıklanan ürün cart'tan kaldırılacak. 
+
+
+- Ayrıca, App.js'de oluşturduğumuz removeFromCart() fonksiyonu içerisinde sepetten ürün silindiğinde uyarı mesajını 
+verecek olan alertify-js kodunu yazabiliriz.,
+
+alertify.error(product.productName + " deleted from cart!", 2);
