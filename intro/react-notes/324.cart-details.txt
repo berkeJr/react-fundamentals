@@ -1,0 +1,116 @@
+324.Sepet Detay Sayfasının Yazılması
+
+
+- Şimdi ise sepet detay sayfasını oluşturalım. 
+
+
+- Bir önceki derste react-router-dom kurulumunu yapıp daha sonra da App.js'de router yapısını şu şekilde kullanmıştık:
+
+<Routes>
+  <Route
+    exact
+    path="/"
+    element={
+      <ProductList
+        products={this.state.products}
+        addToCart={this.addToCart}
+        currentCategory={this.state.currentCategory}
+        info={productInfo}
+      />
+    }
+  />
+
+  <Route exact path="/cart" element={<CartList />} />
+  <Route exact path="*" element={<NotFound />} />
+</Routes>
+
+
+- Burada ProductList için data'ları parametre olarak yollamıştık. Aynı şekilde sepet detayını da CartList'e bu şekilde 
+göndermemiz gerekli.
+
+<Route
+    exact
+    path="/cart"
+    element={
+        <CartList
+            cart={this.state.cart}
+            removeFromCart={this.removeFromCart}
+        />
+    }
+/>
+
+- Artık CartList'in içerisinde sepet elemanlarına ulaşabilir ve onları listeleyebiliriz. 
+
+
+- CartList.js componentine gidelim ve düzenleyelim. render() üzerinde(dışında) renderCart() isimli bir fonksiyon oluşturalım.
+
+<Table striped>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Category Id</th>
+            <th>Product Name</th>
+            <th>Unit Price</th>
+            <th>Units In Stock</th>
+            <th>Quantity</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {this.props.cart.map((cartItem) => (
+            <tr key={cartItem.product.id}>
+                <td>{cartItem.product.id}</td>
+                <td>{cartItem.product.categoryId}</td>
+                <td>{cartItem.product.productName}</td>
+                <td>{cartItem.product.unitPrice}</td>
+                <td>{cartItem.product.unitsInStock}</td>
+                <td>{cartItem.product.quantity}</td>
+            </tr>
+        ))}
+    </tbody>
+</Table>
+
+- <thead> ile başlık satırı                     =>   (statik)
+
+- <tbody> ile cart'a gelecek olan ürünler       =>   (dinamik)
+
+
+- renderCart() fonksiyonumuzu yazdık, şimdi de onu kullanabilmek için render() içerisinde çağırmamız gerekli.
+
+
+- Son olarak yapmamız gereken bir şey daha var. Şu anda ürünleri Add To Cart butonuyla sepete ekleyince aslında 
+bellekte ekleme işlemini yapıyor, 
+
+
+- CartSummary.js'ye gidelim. Orada DropdownItem'da reset yerine şu kodu yazalım:
+
+
+- Öncelikle Link'i import edelim:
+
+import { Link } from 'react-router-dom';
+
+
+- DropdownItem'da Link'i kullanalım:
+
+<DropdownItem>
+    <Link to="cart"></Link>
+</DropdownItem>
+
+
+- Link to => Gidilecek route'u belirler. Burada cart route'una gider.
+
+
+- Şu anda anasayfada ürünleri Add ile cart'a ekleyip, Navbar'da açılan menüden (DropdownItem'dan) Go To Cart diyerek
+route yapısı ile Cart'a gidebiliriz.
+
+
+- Aynı şekilde CartSummary.js'de DropdownItem'a şunu yazabiliriz:
+
+<DropdownItem>
+    <Link to="/">Go To Products</Link>
+</DropdownItem>
+
+
+- Navbar'da DropdownItem'da Go To Products a tıklarsak route ile ana sayfaya (Products - ürünlerin olduğu sayfa) döneriz.
+
+
