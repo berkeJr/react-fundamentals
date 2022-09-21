@@ -24,6 +24,9 @@ import NotFound from "./NotFound";
 // CartList.js
 import CartList from "./CartList";
 
+// FormDemo1.js
+import FormDemo1 from "./FormDemo1";
+
 // App Class Componenti:
 export default class App extends Component {
   state = {
@@ -138,7 +141,7 @@ export default class App extends Component {
                     />
                   }
                 />
-
+                <Route path="/form1" element={<FormDemo1 />} />
                 <Route exact path="*" element={<NotFound />} />
               </Routes>
             </Col>

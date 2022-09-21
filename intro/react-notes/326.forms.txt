@@ -1,3 +1,71 @@
 326.Formlarla Çalışmaya Başlamak
 
 
+- Burada formlarla çalışmaya başlayalım. İlk olarak src klasöründe FormDemo1.js isimli yeni 
+bir dosya oluşturalım ve rcc ile class component haline getirelim. 
+
+
+- Form'lar aslında HTML input'larına girdiğimiz değerleri kontrol ettiğimiz alanlardır. Burada da basit 
+bir form yapısıyla çalışmaya başlayalım. 
+
+
+- FormDemo1.js'de render() üzerinde state değerlerimizi oluşturalım. 
+state = {
+    userName: "",
+};
+
+
+- return içerisinde div içinde form elementlerimizi oluşturalım.
+<div>
+    <form>
+        <h3>User Name</h3>
+        <input type="text"></input>
+    </form>
+</div>
+
+
+- Burada state içerisindeki userName değerimizi input alanına bağlamak istiyoruz. Yani input alanına
+girilen isim, başlıkta canlı olarak yazdırılsın. Bunun için input'ta onEvent isimli event'i kullanırız.
+Böylece input alanında her karakter değişiminde onChange eventi tetiklenir.  
+
+
+- onChange eventi içerisinde {this.onChangeHandler} şeklinde bir fonksiyon kullanalım. Bunun için de 
+render() üzerinde onChangeHandler isimli bir fonksiyon oluşturalım.
+ 
+
+onChangeHandler = (event) => {
+    this.setState({userName: event.target.value})
+}
+
+- Burada fonksiyon parametre olarak event alır. 
+
+- event.target ise event'e sebep olan nesne anlamına gelir. 
+
+
+- Daha sonra da div içerisinde userName state'ini kullanırız: 
+
+<div>
+    <form>
+        <h3>User Name</h3>
+        <input onChange={this.onChangeHandler} type="text"></input>
+        <h3>User Name is: {this.state.userName}</h3>
+    </form>
+</div>
+
+
+- Daha sonra ise bu FormDemo1.js'nin açılabilmesi için App.js'de bir route tanımı gerçekleştireceğiz:
+<Route path="/form1" element={<FormDemo1 />} />
+
+
+- Son olarak Navi.js'de FormDemo1 için link verelim:
+<NavItem>
+    <Link to="form1" >Form 1</Link>
+</NavItem>
+
+
+- Burada NavItem içerisinde Link kullandığımız için Link'i react-router-dom'dan import etmemiz gerekli.
+import { Link } from 'react-router-dom';
+
+
+- Şu anda Navbar'Da Form 1 ekranına gidince router sayesinde FormDemo1.js gelecek. Orada inputa girilen değer
+her karakter değişiminde h3 elementi ile canlı olarak yazdırılıyor. 
