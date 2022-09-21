@@ -1,0 +1,34 @@
+327.Form Submit İşlemleriyle Çalışmaya Başlamak
+
+
+- Şimdi de form'da submit İşlemlerine bakalım. Form içerisinde birçok değer bulunuyor. Input, checkbox, radio button, 
+text area gibi alanlara girilen değerleri bir submit butonu ile kaydedip POST işlemini gerçekleştiririz. 
+
+
+- FormDemo1.js'de form içinde bir submit inputu oluşturalım ve bir <form> için onSubmit eventi kullanalım. 
+
+<form onSubmit={this.onSubmitHandler}>
+    <h3>User Name</h3>
+    <input onChange={this.onChangeHandler} type="text"></input>
+    <h3>User Name is: {this.state.userName}</h3>
+    <input type="submit" value="Save" />
+</form>
+
+- render() fonksiyonu üzerinde bir de onSubmitHandler() fonksiyonu oluşturalım.
+
+onSubmitHandler = (event) => {
+    alert(this.state.userName);
+}
+
+- Bu şekilde kullandığımızda input'a isim girip Save butonuna basınca alert düzgün bir şekilde çalışır. Fakat uygulama
+sayfayı refresh eder. Yani örneğin sepette ürünler varsa onlar kaybolur, sayfa yenilenir. Yani uygulama Single Page
+Application'ın davranışının dışında bir durum sergiler. 
+
+- Bu tarz submit işlemleri için React'ta standart kodumuz bulunuyor, onu yazarız.
+
+onSubmitHandler = (event) => {
+    event.preventDefault();
+    alert(this.state.userName);
+}
+
+// event.preventDefault();  bu kod ile sayfanın refresh olması engellenir, sepette ürünler durmaya devam eder.

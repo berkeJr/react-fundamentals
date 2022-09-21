@@ -44,14 +44,13 @@ export default class Navi extends Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <NavItem>
+              <NavLink>
                 <Link to="form1">Form 1</Link>
-              </NavItem>
+              </NavLink>
 
               <NavItem>
                 <NavLink href="#">Github</NavLink>
               </NavItem>
-
               <CartSummary
                 removeFromCart={this.props.removeFromCart}
                 cart={this.props.cart}
