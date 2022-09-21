@@ -1,0 +1,132 @@
+329.Zengin Form Demosu
+
+
+- Şimdi de Form'larla ilgili daha fazla örnek içeren, daha görsel bir çalışma yapalım.
+
+
+- Bu kapsamda src klasörüne FormDemo2.js isimli bir dosya ekleyelim ve orada rcc ile class componentimizi 
+oluşturalım.
+
+
+- Oluşturduğumuz FormDemo2'yi App.js'de import edelim ve yine App.js'de route olarak kullanalım.
+
+import FormDemo2 from "./FormDemo2";
+
+<Route path="/form2" element={<FormDemo2 />} />
+
+
+- Daha sonra bir de Navi.js'de navbar'da FormDemo2'ye gidecek olan Link'i yazalım. 
+
+<NavItem>
+    <NavLink>
+        <Link to="form2">Form 2</Link>
+    </NavLink>
+</NavItem>
+
+
+- Şimdi de FormDemo2.js'ye gidip orada daha görsel olacak şekilde ReactStrap ile çalışalım:
+
+- İlk olarak ReactStrap'te kullancağımız elementleri import edelim:
+
+
+- Formumuzda birkaç alan olmasını istiyoruz. Bu sepeble FormDemo2.js'de render() üzerinde hemen birkaç tane state değeri
+tanımlayalım:
+
+state = {
+    email: "",
+    password: "",
+    city: "",
+    description: "",
+};
+
+
+- Daha önce Form 1 ile çalışırken render()'ın üzerinde onChangeHandler ve onSubmitHandler fonksiyonlarımızı yazmıştık.
+Burada da o fonksiyonları yazalım.  
+
+
+- Ayrıca submit işlemi olduğunda uyarı mesajını alertify-js ile verelim. Bu sepeble FormDemo2.js'de 
+ilk olarak alertify-js'yi import edelim:
+
+import alertify from 'alertifyjs';
+
+
+- Burada handleChange() ve handleSubmit() isimlerini kullanacağız:
+
+handleChange = (event) => {
+    let name = event.target.name;
+
+    let value = event.target.value;
+
+    this.setState({ [name]: value });
+};
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    alertify.success(this.state.email + "added to db!");
+};
+
+- Şu anda onChange ve onSubmit attribute'larını kullananilmek için gerekli olan kodları yazdık. Şİmdi de formumuzu
+oluşturup devam edelim.
+
+
+- div içerisinde ReactStrap elementlerini kullanıp form oluşturacağız:
+
+    <div>
+        {/* Inputlara girilen name değeri state'deki karşılıkları ile aynı olmalı. */}
+        <Form onSubmit={this.handleSubmit}>
+          <FormGroup>
+            <Label for="email">Email</Label>
+            <Input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Enter Email"
+                onChange={this.handleChange}
+            />
+          </FormGroup>
+
+          <FormGroup>
+            <Label for="password">Password</Label>
+            <Input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Enter Password"
+                onChange={this.handleChange}
+            />
+          </FormGroup>
+
+          <FormGroup>
+            <Label for="description">Description</Label>
+            <Input
+              type="textarea"
+              name="description"
+              id="description"
+              placeholder="Enter Description"
+              onChange={this.handleChange}
+            />
+          </FormGroup>
+
+          <FormGroup>
+            <Label for="city">City</Label>
+            <Input
+              type="select"
+              name="city"
+              id="city"
+              onChange={this.handleChange}
+            >
+              <option>Ankara</option>
+              <option>İstanbul</option>
+              <option>İzmir</option>
+              <option>Antalya</option>
+              <option>Bursa</option>
+            </Input>
+          </FormGroup>
+
+          <Button type="submit">Save</Button>
+        </Form>
+      </div>
+
+- Burada ReactStrap form elementleri ile birlikte onChange ve onSubmit evetnlerini ve o eventler için oluşturduğumuz 
+fonksiyonları kullandık. 
+

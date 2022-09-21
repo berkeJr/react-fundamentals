@@ -27,6 +27,9 @@ import CartList from "./CartList";
 // FormDemo1.js
 import FormDemo1 from "./FormDemo1";
 
+// Form Demo2.js
+import FormDemo2 from "./FormDemo2";
+
 // App Class Componenti:
 export default class App extends Component {
   state = {
@@ -142,6 +145,7 @@ export default class App extends Component {
                   }
                 />
                 <Route path="/form1" element={<FormDemo1 />} />
+                <Route path="/form2" element={<FormDemo2 />} />
                 <Route exact path="*" element={<NotFound />} />
               </Routes>
             </Col>

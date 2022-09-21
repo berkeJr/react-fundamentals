@@ -44,10 +44,17 @@ export default class Navi extends Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <NavLink>
-                <Link to="form1">Form 1</Link>
-              </NavLink>
+              <NavItem>
+                <NavLink>
+                  <Link to="form1">Form Demo 1</Link>
+                </NavLink>
+              </NavItem>
 
+              <NavItem>
+                <NavLink>
+                  <Link to="form2">Form Demo 2</Link>
+                </NavLink>
+              </NavItem>
               <NavItem>
                 <NavLink href="#">Github</NavLink>
               </NavItem>
