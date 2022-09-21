@@ -1,0 +1,61 @@
+328.Çoklu Form Elemanlarıyla Çalışmak
+
+
+- Şimdi de birden fazla input'umuz olduğundaki davranışı inceleyelim. Örneğin şimdiye kadar sadece 'User Name' ile 
+çalıştık. Şimdi bu örneği arttıralım.
+
+
+- Bu kapsamda state içerisine city'yi ekleyelim ve tıpkı user name için oluşturduğumuz inputları city için de oluşturalım.
+
+state = {
+    userName: "",
+    city: "",
+};
+
+<h3>City</h3>
+<input onChange={this.onChangeHandler} type="text" />
+<h3>City is: {this.state.city} </h3>
+
+
+- Biz onChangeHandler() fonksiyonu ile şöyle bir kod yazmıştık:
+
+onChangeHandler = (event) => {
+    this.setState({userName: event.target.value})
+}
+
+- Burada userName state'ini set edip yeni değeri atamıştık. Fakat örneğin city'yi set ettiğimizde userName'in çalışmaması gerekiyor.
+Yani o durumda event'in userName için çalışmaması gerekli. Bunun için şöyle bir kod yazarız
+
+onChangeHandler = (event) => {
+    // this.setState({userName: event.target.value});  // eski tek input'lu durumda
+
+    // name => event'imize sebep olan nesnenin ismi
+    let name = event.target.name;
+
+    // value => event'e sebep olan hedef nesnenin value'su
+    let value = event.target.value;
+
+    this.setState({ [name]: value });  // name = event'e sebep olan nesne: input onChange
+};
+
+
+// Burada name'e karşılık gelen değerleri input'ta name attribute'u ile yazarız:
+
+<div>
+    <form onSubmit={this.onSubmitHandler}>
+        <h3>User Name</h3>
+        <input name="userName" onChange={this.onChangeHandler} type="text"></input>
+        <h3>User Name is: {this.state.userName}</h3>
+
+        <h3>City</h3>
+        <input name="city" onChange={this.onChangeHandler} type="text" />
+        <h3>City is: {this.state.city} </h3>
+
+        <input type="submit" value="Save" />
+    </form>
+</div>
+
+name="userName" 
+name="city
+
+Burada userName ve city state değerlerinden geliyor, oradaki isimle aynı olmak zorunda. 
