@@ -1,0 +1,37 @@
+331.Redux Projesinin Oluşturulması ve Paketler
+
+
+- Şimdi de ilk projemizle Redux'ı kullanmaya başlayalım. 
+
+
+- Terminalde react-redux-workshop klasörüne locate olalım. Burada yeni bir react projesi oluşturacağız. 
+Projenin ismi ise redux-intro olsun.
+
+npx create-react-app redux-intro
+
+
+- Bu proje basit bir redux projesi olacak ve redux mantığını anlayacağız. Daha sonra da büyük projeye geçeceğiz. 
+Büyük projede de redux'ı gelişmiş yapıları ile beraber kullanacağız (redux-thunk gibi), ve orada aynı zamanda 
+react-hooks ile çalşıacağız.
+
+
+- Peki şimdi biz bu projede ne yapacağız? Burada basit bir sayaç uygulaması yapacağız. Sayı sayacağız, sayıyı 1
+arttırmak, 2 arttırmak ve 1 eksiltmek için butonlarımız olacak. Butonlara tıklanınca sayı artacak veya azalacak. Burada
+farklı componentlerle çalışmak için her birini ayrı componentlerde tutacağız. Ayrıca bizim bir redux yapımız olacak. Sayı 
+label'ı ve butonlar bizim redux storage'ımıza bağlanacak. Bu şekilde bir proje oluşturacağız. 
+
+
+- Sayı label'ı ve 3 adet butonla birlikte toplam 4 tane componentimiz olacak ve burada Redux Storage ile 
+çalışma mantığını görüyor olacağız. 
+
+
+-  Terminalde redux-intro projemize locate olalım ve de redux'ı kuralım.
+
+cd redux-intro
+
+npm install redux
+
+
+- Bu genel redux paketi, bir de react için geliştilmiş react-redux paketini kurmamız gerekli. 
+
+npm install react-redux

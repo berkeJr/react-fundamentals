@@ -1,0 +1,26 @@
+330.Redux Nedir?
+
+
+- Bu kısımda Redux ile çalışmaya başlayalım. Sade React ile çalışırken bir problemden bahsetmiştik. Öncelikle 
+React'ın bir component mimarisi var. Data'nın state ve props'lar ile yönetildiğini de söylemiştik . 
+Ve biz yalnızca bir component'ten onun bir altındaki componentine data-event taşıma işlemini gerçekleştirebiliyoruz. 
+Yani biz React tarafında one way binding dediğimizi yöntemi kullanıyoruz. Bu durumda ana component'ten (App.js)
+2 ya da 3 kademe içerdeki componente data taşımak istediğimizde Component Drilling dediğimiz yöntemi kullanıyorduk, 
+bu da büyük projeler için zorluk çıkartabilir.
+
+
+- İşte Redux'ta bu sorunun üstesinden geliyoruz. React ilk etapta bu state yönetimini yani data - durum 
+yönetimini Flux denilen bir projeyle gerçekleştiriyordu. Fakat Redux'la birlikte kendileri de bu teknolojiyi kullanır
+oldu. Redux aslında ilk etapta React'taki state yönetimi için ortaya atılmıştır ama Redux herhangi bir teknolojiye bağımlı
+değildir. Dolayısyısla Redux'ı Angulari içerisinde de kullanabiliyoruz, yani Redux, React ekibinin geliştirdiği bir 
+teknoloji değil. 
+
+
+- React'ta state'imizi App'de tutuyorduk, Redux'ta ise o state'i App'de tutmak yerine, state'i Storage isimli
+başka (bağımsız) bir yerde tutuyoruz. Storage'ı aslında data'nın, event'in tutulduğu bir veritabanı gibi düşünebiliriz.
+Yani Redux yapısı bizim için o state yapısının kendisini tutuyor diyebiliriz. 
+
+
+- Daha sonra herhangi bir component o state'i istediği zaman Storage'dan kullanabiliyor. Ve aynı state'i birden 
+çok component de storage'dan alarak daha kolay bir şekilde kullanabiliyor. Böylece Component Drilling olayı 
+ortadan kalkıyor. 
