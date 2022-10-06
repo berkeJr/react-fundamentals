@@ -1,0 +1,113 @@
+332.Action Yapısını Anlamak
+
+
+- src klasörü altında redux ve components isimli 2 klasör oluşturalım. Daha sonra da redux klasörü içerisinde 
+actions isimli bir klasör oluşturalım. 'action' bizim için şu anlama geliyor, örneğin daha önceki projemizde 
+sepete ekleme yaptık, yani sepeti yönettik, addToCart diye bir operasyonumuz vardı, removeFromCart diye 
+başak bir operasyonumuz vardı. Actions bizim aslında arttır, eksilt, listele, filtrele gibi aksiyonlarımız, 
+operasyonlarımız.
+
+
+- Bu noktada uygulamamızın kullanacağı bütün aksiyonları burada tutuyoruz. 
+
+
+- Düz react kullanarak ne yaptığımızı hatırlayalım. Örneğin bizim bir App'miz vardı, bir tane ProductList, 
+bir tane Navi ve bir tane de CategoryList'imiz vardı. Navi'nin altında da CartSummary'miz bulunuyordu. Örneğin 
+ProductList'te bir addToCart operasyonunu App'de tanımladık, CartSummary'de removeFromCart vardı, 
+onu da App'de tanımladık. Çünkü sepet datası App'deydi. İşte biz burada bu aksiyonlarımızı actions klasörü 
+içerisinde tutuyor olacağız. 
+
+
+- actions klasöründe actionTypes.js isimli bir dosya oluşturalım. Peki nedir bu actionTypes? Aslında biz, 
+aksiyonlarımızın isimlerini değişkenlerde tutuyoruz ki aksiyonları rahat rahat kullanabilelim. Tekrarladığımızda o action
+isimleri bir daha yazmamız gerekmesin. Bu aslında programlamada 'magic string' denen bir olaya karşılık geliyor.
+
+
+- Şöyle düşünelim bizim standart hata mesajlarımız var, ve biz bu hata mesajlarını onlarca sayfada kullanıyoruz, örneğin 
+bilgiler eksik diye bir hata mesajımız var, ve biz bu hata mesajını bir çok sayfada kullanıyoruz, şimdi biz her seferinde
+bilgiler eksik yazısını hatanın içerisine ayrı ayrı yazarsak, yani 10 farklı yerde kullandığımızda her yere bilgiler eksik 
+yazmamız gerekir. İleride o metni değiştirmemiz gerektiğinde ise tek tek bütün kullandığımız yerlerde değişiklik 
+yapmamız gerekir. Bundan kurtulmak için actionTypes.js isimli dosyanın içerisinde bunu gerçekleştiririz. 
+
+
+- Aslında daha da ilerledikçe bu actionTypes'ı bölümlere ayrırız, işte productActionTypes, caregoryActionTypes, 
+cartActionTypes gibi. Biz şu an için olayı öğrenmeye çalışıyoruz. 
+
+
+- Burada bizim sayacımız vardı ve sayaç içerisinde 1 arttırma, 1 eksiltme ve 2 arttırma operasyonlarımız vardı. 
+
+
+- actionTypes.js'de aksiyonlarımızı tanımlayalım:
+
+export const INCREASE_COUNTER = "INCREASE_COUNTER";                // =>  Bu 1 arttırma işlemi, aslında değişken olarak düşünebiliriz.
+
+export const DECREASE_COUNTER = "DECREASE_COUNTER";                // =>  Bu 1 azaltma işlemi.
+
+export const INCREASE_BY_TWO_COUNTER = "INCREASE_BY_TWO_COUNTER";  // =>  Bu da 2 arttırma aksiyonu.
+
+
+- Biz şu an aslında aksiyonlarımızı hala yazmadık, aslındab burada aksiyonlarımızın isimlerini tuttuk. İşte actions redux'la 
+ilk iletişimi kurduğumuz nokta. Daha sonra bu aksiyonların ne yapacağına bir dosyada karar veriyoruz. Şimdi bizim
+aksiyonlarımız counter için. O yüzden actions klasörü içerisinde counterActions.js isimli bir dosya oluşturalım. Yani
+counterActions'da operasyonlarımızı yazacağız. Aslında actionTypes'ı koymayıp buraya da yazabiliriz. 
+
+
+- Şimdi counterActions.js dosyamıza gelelim. actionTypes'da tuttuğumuz bilgileri import edelim:
+
+import * as actionTypes from "./actionTypes";
+
+- Şimdi burada (counterActions.js'de) oluşturacağımız aksiyonları yazalım. Aksiyonlar aslında birer fonksiyon.
+
+export const increase_counter = () => ({
+  type: actionTypes.INCREASE_COUNTER,
+  payload: 1,   // 1 arttıracağız
+});
+
+Burada süslü parantez içerisinde parametre olarak obje gönderiyoruz. Aksiyonun type'ı ve payload'ı var. Yani
+aksiyonumuz aslında bir fonksiyon ve o fonksiyonun parametreleri de:
+
+type: actionTypes.INCREASE_COUNTER,
+payload: 1,
+
+
+- Biz daha sonra bu aksiyonu redux'ta başka bir yerde kullanıyor olacağız. 
+
+
+- Ana component içerisinde;
+
+1 arttırma işleminin olduğu component, 
+
+1 eksiltme işleminin olduğu component,
+
+2 arttırma işleminin olduğu component  ve
+
+Mevcut sayıyı gösteren component bulunacak. 
+
+
+- Örnek olarak 1 arttırma işleminin olduğu component, increase_counter() fonksiyonunu çağıracak. Daha 
+sonra increase_counter() reducer'a gidiyor ve bana 
+
+type: actionTypes.INCREASE_COUNTER,
+payload: 1,
+
+Bana bu type ve bu payload'la bir talep geldi, biz de reducer'da bakacağız, eğer objenin içerisinde
+INCREASE_COUNTER varsa ona göre işlemi yapacağız. Yani increase_counter(), 1 arttırma işleminin olduğu componentin
+çağırdığı event. 
+
+
+- Aynı şekilde counterActions.js'de decreaseCounter ve increaseByTwoCounter fonksiyonlarını yazalım:
+
+
+export const decreaseCounter = () => ({
+  type: actionTypes.DECREASE_COUNTER,
+  payload: 1,   // 1 azaltacağız
+}); 
+
+
+export const increaseByTwoCounter = () => ({
+  type: actionTypes.INCREASE_BY_TWO_COUNTER,
+  payload: 2,   // 2 - 2 arttıracağız
+});
+
+
+// payload'ı event türünün gönderilen data'sı gibi düşünebiliriz.
